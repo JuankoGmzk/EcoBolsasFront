@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
+import {  SocketWebService} from "./services/socket-web.service";
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'front';
+
+  constructor(public authService: AuthService,private socketService: SocketWebService) {}
+
+  ngOnInit() {
+    
+  }
 }

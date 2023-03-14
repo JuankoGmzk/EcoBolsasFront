@@ -1,0 +1,108 @@
+<div class="row">
+    <div class="col-md-12 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                ORDEN DE TRABAJO
+            </div>
+            <div class="card-body">
+                <form (submit)="crearTarea()">
+
+                    <div class="row m-3">
+                        <div class="card col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        EMPRESA: <input type="text" [(ngModel)]="tarea.empresa" name="empresa"
+                                            class="form-control" placeholder="Empresa" required autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        Fecha entrega: <input type="text" [(ngModel)]="tarea.fecha_entrega" name="fecha_entrega"
+                                            class="form-control" placeholder="Fecha de entrega (MM-dd)" required
+                                            autofocus>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        Fecha: <input type="text" [(ngModel)]="tarea.fecha" name="fecha"
+                                            class="form-control" placeholder="Fecha" required autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        Supervisor: <input type="text" [(ngModel)]="tarea.supervisor" name="supervisor"
+                                            class="form-control" placeholder="Supervisor" required autofocus>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-3">
+                        <div class="card col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        MATERIAL: <input type="text" [(ngModel)]="tarea.material" name="material"
+                                            class="form-control" placeholder="Material" required autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        TIPO BOLSA:
+                                        <input type="text" [(ngModel)]="tarea.tipo_bolsa" name="tipo_bolsa"
+                                            class="form-control" placeholder="Tipo bolsa" required>
+                                    </div>
+                                    <div class="form-group">
+                                        COGEDERA:
+                                        <input type="text" [(ngModel)]="tarea.cogedera" name="cogedera" class="form-control"
+                                            placeholder="Cogedera" required>
+                                    </div>
+                                    <div class="form-group">
+                                        COLOR TELA:
+                                        <input type="text" [(ngModel)]="tarea.color_tela" name="color_tela"
+                                            class="form-control" placeholder="Color tela" required>
+                                    </div>
+                                    <div class="form-group">
+                                        MEDIDAS:
+                                        <input type="text" [(ngModel)]="tarea.medidas" name="medidas" class="form-control"
+                                            placeholder="Medidas" required>
+                                    </div>
+                                    <div class="form-group">
+                                        MARCACIÓN:
+                                        <input type="text" [(ngModel)]="tarea.marcacion" name="marcacion"
+                                            class="form-control" placeholder="Marcación" required>
+                                    </div>
+                                    <div class="form-group">
+                                        COLOR TINTAS:
+                                        <input type="text" [(ngModel)]="tarea.color_tintas" name="color_tintas"
+                                            class="form-control" placeholder="Color tintas" required>
+                                    </div>
+                                    <div class="form-group">
+                                        CANTIDAD:
+                                        <input type="text" [(ngModel)]="tarea.cantidad" name="cantidad" class="form-control"
+                                            placeholder="Cantidad" required>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- <input type="file" class="form-control-file" id="inpUploadFile" name="inpUploadFile"
+                                    accept=".pdf,.jpeg,.png"> -->
+                                    <a><img width="auto" height="auto" src="../../../assets/img/EcoBackGround.png"
+                                            class="attachment-medium size-medium" alt="" loading="lazy"
+                                            srcset="https://ecobolsas.co/wp-content/uploads/2020/12/logo-300x162.png 300w, https://ecobolsas.co/wp-content/uploads/2020/12/logo.png 493w"
+                                            sizes="(max-width: 200px) 50vw, 150px"></a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button class="btn btn-success btn-block">
+                            Crear
+                        </button>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
