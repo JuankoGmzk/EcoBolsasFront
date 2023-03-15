@@ -91,6 +91,9 @@ export class CotizadorComponent {
   txtMetrosRequeridosHorizontal: number = 0;
   txtMetrosRequeridosVertical: number = 0;
 
+  txtMetrosSobranteHorizontal: number = 0;
+  txtMetrosSobranteVertical: number = 0;
+
   //Proceso
   ObtenerCosto_anchoRollo: string = '';
   ObtenerCosto_largoRollo: string = '';
@@ -99,6 +102,10 @@ export class CotizadorComponent {
 
   //Ruta de imagen
   RutaImagen: string = 'deafult';
+  RutaImagenSobrante: string = 'deafult';
+  blnShowImagenSobrante:boolean = false;
+  RutaImagenCorte: string = 'deafult';
+  blnShowImagenCorte:boolean = false;
 
   constructor(private cotizadorService: CotizadorService) { }
 
@@ -252,11 +259,37 @@ export class CotizadorComponent {
       const resultMetrosRequeridosCorteVertical = Math.ceil((CorteVerticalCortesRequeridos * Number(this.txtCorteAlto_cm)) / 100)
       this.txtMetrosRequeridosVertical = resultMetrosRequeridosCorteVertical;
 
+      if(resultMetrosRequeridosCorteHorizontal<resultMetrosRequeridosCorteVertical){
+        this.RutaImagenCorte = "rolloHorizontal"
+        this.blnShowImagenCorte = true;
+      }
+      else{
+        this.RutaImagenCorte = "rolloVertical"
+        this.blnShowImagenCorte = true;
+      }
+
       if (this.slcTipoBolsa == 'Fuelle completo') {
-        this.CalcularSobranteFuelleComleto(this.ObtenerCosto_anchoRollo, this.txtFuelleAlto_cm, this.txtAlto_cm, CorteHorizontalSobrante, resultMetrosRequeridosCorteHorizontal, calculoTotalUnidadesConDecimales)
+        const intSobranteHorizontal = this.CalcularSobranteFuelleComleto(this.ObtenerCosto_anchoRollo, this.txtFuelleAlto_cm, this.txtAlto_cm, CorteHorizontalSobrante, resultMetrosRequeridosCorteHorizontal, calculoTotalUnidadesConDecimales)
+        const intSobranteVertical = this.CalcularSobranteFuelleComleto(this.ObtenerCosto_anchoRollo, this.txtFuelleAlto_cm, this.txtAlto_cm, CorteVerticalSobrante, resultMetrosRequeridosCorteVertical, calculoTotalUnidadesConDecimales, true)
+        
+        if(intSobranteHorizontal < intSobranteVertical){
+          if(intSobranteHorizontal==0){
+            this.RutaImagenSobrante = "rolloVertical"
+            this.blnShowImagenSobrante = true;
+          }
+          else{
+            this.RutaImagenSobrante = "rolloHorizontal"
+            this.blnShowImagenSobrante = true;
+          }
+        }
+        else{
+          this.RutaImagenSobrante = "rolloVertical"
+          this.blnShowImagenSobrante = true;
+        }
+        this.txtMetrosSobranteHorizontal = intSobranteHorizontal;
+        this.txtMetrosSobranteVertical = intSobranteVertical;
 
 
-        this.CalcularSobranteFuelleComleto(this.ObtenerCosto_anchoRollo, this.txtFuelleAlto_cm, this.txtAlto_cm, CorteVerticalSobrante, resultMetrosRequeridosCorteVertical, calculoTotalUnidadesConDecimales, true)
       }
     }
   };
@@ -290,6 +323,7 @@ export class CotizadorComponent {
       MetrosRequeridos = Math.ceil((CortesRequeridos * Number(strAB)) / 100)
     }
    
+    return MetrosRequeridos;
   }
 
   CambiarImagen(strMaterial: string) {
