@@ -304,6 +304,30 @@
             <input type="text" class="form-control" id="txtMetrosRequeridosVertical" [(ngModel)]="txtMetrosRequeridosVertical"
               placeholder="Metros requeridos vertical" disabled>
           </div>
+
+          
+          <div class="form-group col-md-12" *ngIf="blnShowImagenCorte">
+            <img src="../../../assets/img/{{RutaImagenCorte}}.png" width="150" height="150" class="mx-auto"> 
+          </div>
+
+          <!-- ---------------------- -->
+
+          <div class="form-group col-md-6">
+            <label for="txtMetrosSobranteHorizontal">Metros sobrante horizontal</label>
+            <input type="text" class="form-control" id="txtMetrosSobranteHorizontal" [(ngModel)]="txtMetrosSobranteHorizontal"
+              placeholder="Metros requeridos vertical" disabled>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="txtMetrosSobranteVertical">Metros sobrante vertical</label>
+            <input type="text" class="form-control" id="txtMetrosSobranteVertical" [(ngModel)]="txtMetrosSobranteVertical"
+              placeholder="Metros requeridos vertical" disabled>
+          </div>
+
+          <div class="form-group col-md-12" *ngIf="blnShowImagenSobrante">
+            <img src="../../../assets/img/{{RutaImagenSobrante}}.png" width="150" height="150" class="mx-auto"> 
+          </div>
+
         </div>
       </div>
     </div>
