@@ -1,0 +1,228 @@
+<div class="row" [ngStyle]="{ background: 'beige' }">
+ 
+    <div class="col-md-12">
+        <h3 style="text-align: center;">Materiales</h3>
+        <table class="table table-bordered table-striped" style="background-color: beige;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="Table-th">#</th>
+                    <th scope="col" class="Table-th">Nombre Material</th>
+                    <th scope="col">Material</th>
+                    <th scope="col">Largo (m)</th>
+                    <th scope="col">Ancho (cm)</th>
+                    <th scope="col">grm/m2</th>
+                    <th scope="col" style="color: #6026de; background-color: rgb(232, 255, 100);">Costo rollo sin iva</th>
+                    <th scope="col">Vlr. Mtr x Rollo</th>
+                    <th scope="col">Vlr. Mtr x Detal</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let material of materiales, let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <th scope="row">
+                        <span *ngIf="editingItem !== material._id">{{ material.nombreMaterial }}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === material._id" [(ngModel)]="material.nombreMaterial" />
+                    </th>
+                    <td>
+                        <span *ngIf="editingItem !== material._id">{{material.material}}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === material._id" [(ngModel)]="material.material" />
+            
+                    </td>
+                    <td>
+                        <span *ngIf="editingItem !== material._id">{{material.largo_m}} mts</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === material._id" [(ngModel)]="material.largo_m" />
+                    </td>
+                    <td>
+                        <span *ngIf="editingItem !== material._id">{{material.ancho_m}} cms</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === material._id" [(ngModel)]="material.ancho_m" />
+                    </td>
+                    <td>
+                        <span *ngIf="editingItem !== material._id">{{material.grm_m2}}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === material._id" [(ngModel)]="material.grm_m2" />
+                    </td>
+                    <td style="color: #ec7070; background-color: burlywood;">
+                        <span *ngIf="editingItem !== material._id">{{ParserToNumber(material.costo_sinIva_Rollo)}}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === material._id" [(ngModel)]="material.costo_sinIva_Rollo" />
+                    </td>
+                    <td>
+                        {{ValorMetroXrollo(material.costo_sinIva_Rollo,material.largo_m)}}
+                    </td>
+                    <td>
+                        {{ValorMetroXdetal(ValorMetroXrollo(material.costo_sinIva_Rollo,material.largo_m),material.porcentajeValor,i)}}
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-danger  m-1" 
+                                    (click)="EliminarMaterial(material)">Borrar</button>
+                                    
+                            </div>
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-info m-1" *ngIf="editingItem !== material._id" 
+                                    (click)="EditarMaterial(material, material._id)">Editar</button>
+                                <button type="button" class="btn btn-success m-1" *ngIf="editingItem === material._id" (click)="saveEditItem(material)">Guardar</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" [ngStyle]="{ background: 'beige' }">
+    
+    <div class="col-md-12">
+        <h3 style="text-align: center;">Impresion</h3>
+        <table class="table table-bordered table-striped" style="background-color: beige;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="Table-th">#</th>
+                    <th scope="col" class="Table-th">Nombre Impresión</th>
+                    <th scope="col" style="color: #6026de; background-color: rgb(232, 255, 100);">Costo impresion</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let impresion of impresiones, let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <th scope="row">
+                        <span *ngIf="editingItem !== impresion._id">{{ impresion.nombreImpresion }}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === impresion._id" [(ngModel)]="impresion.nombreImpresion" />
+                    </th>
+
+                    <td style="color: #ec7070; background-color: burlywood;">
+                        <span *ngIf="editingItem !== impresion._id">{{ParserToNumber(impresion.costoImpresion)}}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === impresion._id" [(ngModel)]="impresion.costoImpresion" />
+                    </td>
+                    
+                    <td>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-danger  m-1" 
+                                    (click)="EliminarMaterial(impresion)">Borrar</button>
+                                    
+                            </div>
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-info m-1" *ngIf="editingItem !== impresion._id" 
+                                    (click)="EditarMaterial(impresion, impresion._id)">Editar</button>
+                                <button type="button" class="btn btn-success m-1" *ngIf="editingItem === impresion._id" (click)="saveEditItem(impresion)">Guardar</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" [ngStyle]="{ background: 'beige' }">
+    
+    <div class="col-md-12">
+        <h3 style="text-align: center;">Confeccion</h3>
+        <table class="table table-bordered table-striped" style="background-color: beige;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="Table-th">#</th>
+                    <th scope="col" class="Table-th">Nombre Confección</th>
+                    <th scope="col" style="color: #6026de; background-color: rgb(232, 255, 100);">Costo confección</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let confeccion of confecciones, let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <th scope="row">
+                        <span *ngIf="editingItem !== confeccion._id">{{ confeccion.nombreConfeccion }}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === confeccion._id" [(ngModel)]="confeccion.nombreConfeccion" />
+                    </th>
+
+                    <td style="color: #ec7070; background-color: burlywood;">
+                        <span *ngIf="editingItem !== confeccion._id">{{ParserToNumber(confeccion.costoConfeccion)}}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === confeccion._id" [(ngModel)]="confeccion.costoConfeccion" />
+                    </td>
+                    
+                    <td>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-danger  m-1" 
+                                    (click)="EliminarMaterial(confeccion)">Borrar</button>
+                                    
+                            </div>
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-info m-1" *ngIf="editingItem !== confeccion._id" 
+                                    (click)="EditarMaterial(confeccion, confeccion._id)">Editar</button>
+                                <button type="button" class="btn btn-success m-1" *ngIf="editingItem === confeccion._id" (click)="saveEditItem(confeccion)">Guardar</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" [ngStyle]="{ background: 'beige' }">
+   
+    <div class="col-md-12">
+        <h3 style="text-align: center;">Cordones</h3>
+        <table class="table table-bordered table-striped" style="background-color: beige;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="Table-th">#</th>
+                    <th scope="col" class="Table-th">Nombre Cordon</th>
+                    <th scope="col">Largo rollo</th>
+                    <th scope="col" style="color: #6026de; background-color: rgb(232, 255, 100);">Valor Rollo</th>
+                    <th scope="col" style="color: #6026de; background-color: rgb(232, 255, 100);">Valor Metro</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cordon of cordones, let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <th scope="row">
+                        <span *ngIf="editingItem !== cordon._id">{{ cordon.nombreCordon }}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === cordon._id" [(ngModel)]="cordon.nombreCordon" />
+                    </th>
+
+                    <th scope="row">
+                        <samp *ngIf="editingItem !== cordon._id">{{cordon.largoRollo}}</samp>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === cordon._id" [(ngModel)]="cordon.largoRollo" />
+
+                    </th>
+
+                    <td style="color: #ec7070; background-color: burlywood;">
+                        <span *ngIf="editingItem !== cordon._id">{{ParserToNumber(cordon.valorRollo)}}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === cordon._id" [(ngModel)]="cordon.valorRollo" />
+                    </td>
+                    <td style="color: #ec7070; background-color: burlywood;">
+                        <span *ngIf="editingItem !== cordon._id">{{ParserToNumber(cordon.valorMetro)}}</span>
+                        <input type="text" class="form-control bg-transparent text-dark" *ngIf="editingItem === cordon._id" [(ngModel)]="cordon.valorMetro" />
+                    </td>
+                    
+                    <td>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-danger  m-1" 
+                                    (click)="EliminarMaterial(cordon)">Borrar</button>
+                                    
+                            </div>
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-info m-1" *ngIf="editingItem !== cordon._id" 
+                                    (click)="EditarMaterial(cordon, cordon._id)">Editar</button>
+                                <button type="button" class="btn btn-success m-1" *ngIf="editingItem === cordon._id" (click)="saveEditItem(cordon)">Guardar</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+  
