@@ -8,6 +8,7 @@ import {SigupComponent} from './components/sigup/sigup.component';
 import {SigninComponent} from './components/signin/signin.component';
 import { CreateTaskComponent } from "./components/create-task/create-task.component";
 import { CotizadorComponent } from "./components/cotizador/cotizador.component";
+import { MaterialesComponent } from "./components/materiales/materiales.component";
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path : 'signup', component : SigupComponent},
   { path : 'signin', component : SigninComponent},
   { path : 'createTask', component: CreateTaskComponent,canActivate: [AuthGuard]},
-  { path : 'cotizador', component: CotizadorComponent}
+  { path : 'cotizador', component: CotizadorComponent},
+  { path : 'materiales', component:MaterialesComponent}
 ];
 
 @NgModule({

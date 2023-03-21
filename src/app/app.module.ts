@@ -16,6 +16,7 @@ import { CreateTaskComponent } from './components/create-task/create-task.compon
 
 import {  SocketWebService} from "./services/socket-web.service";
 import { CotizadorComponent } from './components/cotizador/cotizador.component';
+import { MaterialesComponent } from './components/materiales/materiales.component';
 
 
 
@@ -27,7 +28,8 @@ import { CotizadorComponent } from './components/cotizador/cotizador.component';
     TaskComponent,
     PrivateTaskComponent,
     CreateTaskComponent,
-    CotizadorComponent
+    CotizadorComponent,
+    MaterialesComponent
   ],
   imports: [
     BrowserModule,
