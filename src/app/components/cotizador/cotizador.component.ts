@@ -12,18 +12,6 @@ export class CotizadorComponent {
 
   miControl: FormControl = new FormControl('', [Validators.required]);
 
-  materiales = [{
-    _id: '',
-    nombreMaterial: '',
-    material: '',
-    largo_m: '',
-    ancho_m: '',
-    grm_m2: '',
-    costo_sinIva_Rollo: '',
-    porcentajeValor: ''
-  }];
-
-  isCollapsibleOpen = false;
   blnFuelleOpen = true;
   blnAsas = true;
 
@@ -99,6 +87,9 @@ export class CotizadorComponent {
   ObtenerCosto_largoRollo: string = '';
   ObtenerCosto_costo_sinIva_Rollo: string = '';
   Sobrantes: any = 0.02;
+  ObtenerCosto_Confeccion : string = '';
+  ObtenerCosto_Cogedera : string = '';
+  ObtenerCosto_Impresion : string = '';
 
   //Ruta de imagen
   RutaImagen: string = 'deafult';
@@ -107,39 +98,29 @@ export class CotizadorComponent {
   RutaImagenCorte: string = 'deafult';
   blnShowImagenCorte:boolean = false;
 
+  //Enviar resultado al usuario
+  strResultadoCorte: number = 0;
+  strResultadoFuelleCompleto: number = 0;
+  strResultadoAsas: number = 0;
+  strResultadoTotal: number = 0;
+
+  strCostoMaterial : number = 0;
+  strCostoConfeccion : number = 0;
+  strCostoImpresion : number = 0;
+  strCostoAccesorio : number = 0;
+  strCostoTransporte : number = 50000;
+  strTOTAL_COSTOS : number = 0;
+  strValor_TOTAL_Bolsa : number = 0;
   constructor(private cotizadorService: CotizadorService) { }
 
   ngOnInit() {
-    this.ObtenerMateriales();
   }
-
-  ObtenerMateriales() {
-    this.cotizadorService.getMateriales().subscribe(
-      res => {
-        this.materiales = res;
-      },
-      err => {
-        console.log(err)
-      }
-    );
-  }
-
+  
   ParserToNumber(valor1: String) {
     let numeroFormateado = Number(valor1).toLocaleString();
     return numeroFormateado;
   }
-
-  ValorMetroXrollo(valor: String, metros: String) {
-    let opeacion = Number(valor) / Number(metros);
-    return Math.floor(opeacion);
-  }
-
-  ValorMetroXdetal(valor: number, multiplicacion: string, index: number) {
-    let intMultiplicacion: number = Number(multiplicacion.toLocaleString());
-    let numeroEntero: number = valor * intMultiplicacion;
-    return numeroEntero.toLocaleString();
-  }
-
+  
   validateInput() {
 
     let blnValidate = true;
@@ -217,6 +198,39 @@ export class CotizadorComponent {
     ).toPromise();
   }
 
+  ObtenerCostoConfeccion(strNameConfeccion: string): Promise<any> {
+    let objNameConfeccion = { nombreConfeccion: strNameConfeccion };
+
+    return from(this.cotizadorService.getConfecionById(objNameConfeccion)).pipe(
+      switchMap(res => {
+        this.ObtenerCosto_Confeccion = res.costoConfeccion;
+        return of(res);
+      })
+    ).toPromise();
+  }
+
+  ObtenerCostoImpresion(strNameImpresion: string): Promise<any> {
+    let objNameImpresion = { nombreImpresion: strNameImpresion };
+
+    return from(this.cotizadorService.getImpresionesById(objNameImpresion)).pipe(
+      switchMap(res => {
+        this.ObtenerCosto_Impresion = res.costoImpresion;
+        return of(res);
+      })
+    ).toPromise();
+  }
+
+  ObtenerCostoCogedera(strNameCogedera: string): Promise<any> {
+    let objNameCogedera = { nombreCogedera: strNameCogedera };
+
+    return from(this.cotizadorService.getCogederaById(objNameCogedera)).pipe(
+      switchMap(res => {
+        this.ObtenerCosto_Cogedera = res.costoCogedera;
+        return of(res);
+      })
+    ).toPromise();
+  }
+
   async CalcularCorte() {
 
     if (this.validateInput()) {
@@ -225,6 +239,7 @@ export class CotizadorComponent {
 
       //Holgura
       this.txtHolguraAncho_cm = '2';
+      const strTipoCogedera =  this.slcTipoCogedera;
       let Holgura = this.slcTipoCogedera = 'Troquel' ? '8' : '5';
       this.txtHolguraAlto_cm = Holgura;
 
@@ -237,6 +252,7 @@ export class CotizadorComponent {
       else {
         this.txtFuelleAlto_cm = this.txtFuelle_cm;
       }
+
       //Corte
       this.txtCorteAncho_cm = (Number(this.txtAncho_cm) + 2 + 0).toString();
       this.txtCorteAlto_cm = (Number(this.txtAlto_cm) * 2 + Number(Holgura) + Number(this.txtFuelleAlto_cm)).toString();
@@ -260,10 +276,12 @@ export class CotizadorComponent {
       this.txtMetrosRequeridosVertical = resultMetrosRequeridosCorteVertical;
 
       if(resultMetrosRequeridosCorteHorizontal<resultMetrosRequeridosCorteVertical){
+        this.strResultadoCorte = resultMetrosRequeridosCorteHorizontal;
         this.RutaImagenCorte = "rolloHorizontal"
         this.blnShowImagenCorte = true;
       }
       else{
+        this.strResultadoCorte = resultMetrosRequeridosCorteVertical;
         this.RutaImagenCorte = "rolloVertical"
         this.blnShowImagenCorte = true;
       }
@@ -274,21 +292,61 @@ export class CotizadorComponent {
         
         if(intSobranteHorizontal < intSobranteVertical){
           if(intSobranteHorizontal==0){
+            this.strResultadoFuelleCompleto = intSobranteVertical;
             this.RutaImagenSobrante = "rolloVertical"
             this.blnShowImagenSobrante = true;
           }
           else{
+            this.strResultadoFuelleCompleto = intSobranteHorizontal;
             this.RutaImagenSobrante = "rolloHorizontal"
             this.blnShowImagenSobrante = true;
           }
         }
         else{
+          this.strResultadoFuelleCompleto = intSobranteVertical;
           this.RutaImagenSobrante = "rolloVertical"
           this.blnShowImagenSobrante = true;
         }
+
         this.txtMetrosSobranteHorizontal = intSobranteHorizontal;
         this.txtMetrosSobranteVertical = intSobranteVertical;
 
+        this.strResultadoTotal = this.strResultadoCorte + this.strResultadoFuelleCompleto + this.strResultadoAsas 
+
+
+        // Costos.
+
+        //Costos Material
+        const intRollosRequeridos = Number((Number(this.strResultadoTotal)/Number(this.ObtenerCosto_largoRollo)).toFixed(1));
+        const intSubTotal = intRollosRequeridos*Number(this.ObtenerCosto_costo_sinIva_Rollo);
+        const iva = intSubTotal*0.19;
+
+        this.strCostoMaterial = intSubTotal+iva+this.strCostoTransporte;
+
+        //Costos Confección
+
+        await this.ObtenerCostoConfeccion(this.slcTipoBolsa);
+        await this.ObtenerCostoCogedera(strTipoCogedera);
+        await this.ObtenerCostoImpresion(this.slcEstampado)
+
+        const intSubTotalConfeccion = calculoTotalUnidadesConDecimales*Number(this.ObtenerCosto_Confeccion); 
+        const intCortesVLr_rolloConfeccion = (intRollosRequeridos*50000);
+        const intCogederaConfeccion = (Number(this.txtUnidadesRequeridas)*Number(this.ObtenerCosto_Cogedera))*Number(this.ObtenerCosto_Cogedera);
+
+        // this.strCostoConfeccion = intSubTotalConfeccion+intCortesVLr_rolloConfeccion+intCogederaConfeccion;
+        this.strCostoConfeccion = intSubTotalConfeccion;
+
+        //Costos Impresión
+        const intTamaño = Number(this.txtAncho_cm)*Number(this.txtAlto_cm);
+        const intTotalImpresion = Number(this.txtUnidadesRequeridas)*Number(this.ObtenerCosto_Impresion);
+
+      
+        this.strCostoImpresion = intTotalImpresion;
+
+
+        this.strTOTAL_COSTOS = this.strCostoMaterial+this.strCostoConfeccion+this.strCostoImpresion+intCortesVLr_rolloConfeccion;
+
+        this.strValor_TOTAL_Bolsa = Math.ceil(this.strTOTAL_COSTOS/Number(this.txtUnidadesRequeridas));
 
       }
     }

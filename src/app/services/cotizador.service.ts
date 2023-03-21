@@ -18,4 +18,40 @@ export class CotizadorService {
     return this.http.post<any>(this.URL+'/MaterialById', nombreMaterial)
   }
 
+  actualizarMaterialById(material:object){
+    return this.http.put<any>(this.URL+"/actualizarMaterial",material);
+  }
+
+  //Impresion
+  getImpresiones(){
+    return this.http.get<any>(this.URL + "/AllImpresiones");
+  }
+
+  getImpresionesById(impresion:object){
+    return this.http.post<any>(this.URL + '/ImpresionById',impresion)
+  }
+
+
+  //Confeccion
+  getConfecciones(){
+    return this.http.get<any>(this.URL + "/AllConfecciones");
+  }
+
+
+  getConfecionById(confeccion:object){
+    return this.http.post<any>(this.URL + '/ConfeccionById',confeccion)
+  }
+
+  //Cordon
+
+  getCordones(){
+    return this.http.get<any>(this.URL + "/AllCordones");
+  }
+
+
+  getCogederaById(confeccion:object){
+    return this.http.post<any>(this.URL + '/CogederaById',confeccion)
+  }
+
+
 }
