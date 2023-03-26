@@ -1,7 +1,17 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CotizadorService } from "../../services/cotizador.service";
-import { FormControl, Validators } from '@angular/forms';
 import { from, of, switchMap } from 'rxjs';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
+
+
+
+interface InputSelect {
+  value: string;
+  viewValue: string;
+}
+
 
 @Component({
   selector: 'app-cotizador',
@@ -10,8 +20,62 @@ import { from, of, switchMap } from 'rxjs';
 })
 export class CotizadorComponent {
 
-  miControl: FormControl = new FormControl('', [Validators.required]);
+  formatLabel(value: number): string {
+    return `${value}`;
+  }
 
+  @ViewChild(MatTable) table!: MatTable<any>;
+
+  
+  
+  TipoCogedera: InputSelect[] = [
+    {value: 'Asas', viewValue: 'Asas'},
+    {value: 'Troquel', viewValue: 'Troquel'}
+  ];
+
+  TipoBolsa: InputSelect[] = [
+    {value: 'Plana', viewValue: 'Plana'},
+    {value: 'Base Fuelle', viewValue: 'Base Fuelle'},
+    {value: 'Fuelle completo', viewValue: 'Fuelle completo'},
+    {value: 'Tula', viewValue: 'Tula'},
+    {value: 'Plegable', viewValue: 'Plegable'},
+    {value: 'Troquel', viewValue: 'Troquel'},
+    {value: 'joyeria', viewValue: 'joyeria'}
+  ];
+
+  TipoMaterial: InputSelect[] = [
+    {value: 'Kambrel', viewValue: 'Kambrel'},
+    {value: 'Kambrel - 70 gr', viewValue: 'Kambrel - 70 gr'},
+    {value: 'Kambrel - 90 gr', viewValue: 'Kambrel - 90 gr'},
+    {value: 'Kambrel - 110 gr', viewValue: 'Kambrel - 110 gr'},
+    {value: 'Madre Selva gr', viewValue: 'Madre Selva gr'},
+    {value: 'Cerro Sport gr', viewValue: 'Cerro Sport gr'},
+    {value: 'Yute gr', viewValue: 'Yute gr'},
+    {value: 'Lienzo gr', viewValue: 'Lienzo gr'},
+    {value: 'Lino gr', viewValue: 'Lino gr'},
+    {value: 'Tafeta gr', viewValue: 'Tafeta gr'},
+    {value: 'Lona PVC gr', viewValue: 'Lona PVC gr'}
+  ];
+
+  TipoEstampado: InputSelect[]=[
+    {value: 'Sin estampado', viewValue: 'Sin estampado'},
+    {value: 'Tinta plana', viewValue: 'Tinta plana'},
+    {value: 'Policromia', viewValue: 'Policromia'}
+  ];
+
+  NumeroCaras: InputSelect []=[
+    {value: '1', viewValue: '1'},
+    {value: '2', viewValue: '2'}
+  ];
+
+  NumeroTintas: InputSelect [] = [
+    {value: '1', viewValue: '1'},
+    {value: '2', viewValue: '2'},
+    {value: '3', viewValue: '3'}
+  ];
+
+
+  //#region VariablesIniciales
   blnFuelleOpen = true;
   blnAsas = true;
 
@@ -111,10 +175,51 @@ export class CotizadorComponent {
   strCostoTransporte : number = 50000;
   strTOTAL_COSTOS : number = 0;
   strValor_TOTAL_Bolsa : number = 0;
-  constructor(private cotizadorService: CotizadorService) { }
+
+  //Valores mostrar usuario cotización final
+
+  strPrecioVentaConIva : number = 0;
+  strTotalVentaConIva : number = 0;
+  strPrecioVentaSinIva : number = 0;
+  strTotalVentaSinIva : number = 0;
+  strUtilidad : number = 25;
+
+
+  //#endregion VariablesIniciales
+  // dataSource = [
+  //   { description: 'Precio Venta (sin IVA)',  unitPrice: 15001, totalPrice: 2850190 },
+  //   { description: 'Precio Venta (IVA-19%)',  unitPrice: 2850, totalPrice: 541536 }
+  // ];
+
+  dataSource = [{}];
+
+  displayedColumns = ['description',  'unitPrice', 'totalPrice'];
+
+  constructor(private cotizadorService: CotizadorService,public dialog: MatDialog) { }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(DialogAnimationsExampleDialog, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+
+  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+    // Only highligh dates inside the month view.
+    if (view === 'month') {
+      const date = cellDate.getDate();
+
+      // Highlight the 1st and 20th day of each month.
+      return date === 1 || date === 20 ? 'example-custom-date-class' : '';
+    }
+
+    return '';
+  };
 
   ngOnInit() {
   }
+
   
   ParserToNumber(valor1: String) {
     let numeroFormateado = Number(valor1).toLocaleString();
@@ -235,11 +340,13 @@ export class CotizadorComponent {
 
     if (this.validateInput()) {
 
+      debugger;
+
       await this.ObtenerCostoMaterial(this.slcMaterial);
 
       //Holgura
       this.txtHolguraAncho_cm = '2';
-      const strTipoCogedera =  this.slcTipoCogedera;
+      var strTipoCogedera =  this.slcTipoCogedera;
       let Holgura = this.slcTipoCogedera = 'Troquel' ? '8' : '5';
       this.txtHolguraAlto_cm = Holgura;
 
@@ -348,9 +455,35 @@ export class CotizadorComponent {
 
         this.strValor_TOTAL_Bolsa = Math.ceil(this.strTOTAL_COSTOS/Number(this.txtUnidadesRequeridas));
 
+
+        //Logica Final
+
+        this.CalcularCotizacionFinal();
+        
       }
     }
   };
+
+  CalcularCotizacionFinal(blnInput:boolean=false){
+    const Utilidad = (this.strUtilidad/100)
+    const PrecioVentaSinIva = (this.strValor_TOTAL_Bolsa*Utilidad)+this.strValor_TOTAL_Bolsa;
+    const PrecioVentaConIva = PrecioVentaSinIva+(PrecioVentaSinIva*(19/100));
+    const strPrecioVentaSinIva = PrecioVentaSinIva;
+    const strTotalVentaSinIva = PrecioVentaSinIva*Number(this.txtUnidadesRequeridas);
+    const strPrecioVentaConIva = PrecioVentaConIva;
+    const strTotalVentaConIva = PrecioVentaConIva*Number(this.txtUnidadesRequeridas);
+
+    const dataSource = [
+      { description: "Precio Venta (sin IVA)", unitPrice: strPrecioVentaSinIva, totalPrice: strTotalVentaSinIva },
+      { description: "Precio Venta (IVA-19%)", unitPrice: strPrecioVentaConIva, totalPrice: strTotalVentaConIva }
+    ];
+
+    this.dataSource = dataSource;
+    
+    if(blnInput){
+      this.table.renderRows();
+    }
+  }
 
   //MetrosRequeridosAncho:MRA
   //Alto Fuelle : AF
@@ -387,4 +520,12 @@ export class CotizadorComponent {
   CambiarImagen(strMaterial: string) {
     this.RutaImagen = strMaterial;
   }
+}
+
+@Component({
+  selector: 'dialog-animations-example-dialog',
+  templateUrl: 'a.html',
+})
+export class DialogAnimationsExampleDialog {
+  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
 }

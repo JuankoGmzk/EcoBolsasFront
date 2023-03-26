@@ -1,349 +1,451 @@
-<div class="row">
-  <div class="col-md-4">
-    <h2 class="text-center">Datos cliente</h2>
-  </div>
-  <div class="col-md-4">
-    <h2 class="text-center">Bolsa</h2>
-  </div>
-  <div class="col-md-4">
-    <h2 class="text-center">Material</h2>
-  </div>
-</div>
-<div class="row">
+<body>
+  <div class="row">
+    <div class="col-md-12">
+      <mat-card class="card">
+        <mat-card-content>
+          <div class="col-md-12">
+            <h2 class="text-center">Datos cliente</h2>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nombre empresa</mat-label>
+                <input matInput [(ngModel)]="txtNombreEmpresa">
+                <div *ngIf="blnNombreEmpresa" style="color: brown;">El campo empresa es obligatorio</div>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nombre contacto</mat-label>
+                <input id="txtNombreContacto" matInput [(ngModel)]="txtNombreContacto">
+                <div *ngIf="blnNombreContacto" style="color: brown;">El campo nombre de contacto es obligatorio</div>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nit / Cédula</mat-label>
+                <input id="txtNit" matInput [(ngModel)]="txtNit">
+                <div *ngIf="blnNit" style="color: brown;">El campo nit es obligatorio</div>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>Tel. Contacto</mat-label>
+                <input id="txtTel_Contacto" matInput [(ngModel)]="txtTel_Contacto">
+                <div *ngIf="blnTel_Contacto" style="color: brown;">El campo telefono de contacto es obligatorio</div>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input id="txtEmail" matInput [(ngModel)]="txtEmail">
+                <div *ngIf="blnEmail" style="color: brown;">El campo email es obligatorio</div>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-4">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Fecha de entrega</mat-label>
+                <input matInput [matDatepicker]="picker" id="txtFechaEntrega" [(ngModel)]="txtFechaEntrega">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker [dateClass]="dateClass" #picker color="primary"></mat-datepicker>
+                <div *ngIf="blnFechaEntrega" style="color: brown;">El campo fecha de entrega es obligatorio</div>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Ciudad</mat-label>
+                <input id="txtCiudad" matInput [(ngModel)]="txtCiudad">
+                <div *ngIf="blnCiudad" style="color: brown;">El campo ciudad es obligatorio</div>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Dirección de entrega</mat-label>
+                <input id="txtDireccionDeEntrega" matInput [(ngModel)]="txtDireccionDeEntrega">
+                <div *ngIf="blnDireccionDeEntrega" style="color: brown;">El campo dirección de entrega es obligatorio
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-  <div class="col-md-4" style="border: 1px solid red">
-    <div class="row">
+    <div class="col-md-7">
+      <mat-card class="card">
+        <mat-card-content>
+          <div class="col-md-12">
+            <h2 class="text-center">Bolsa</h2>
+          </div>
+          <div class="row">
 
-      <div class="form-group col-md-6">
-        <label for="txtNombreEmpresa">Nombre empresa:</label>
-        <input type="text" class="form-control" id="txtNombreEmpresa" [(ngModel)]="txtNombreEmpresa"
-          [ngModelOptions]="{ standalone: true }" placeholder="Nombre empresa" required>
 
-        <div *ngIf="blnNombreEmpresa" style="color: brown;">El campo empresa es obligatorio</div>
+            <div class="col-md-5">
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Tipo Cogedera</mat-label>
+                    <mat-select id="slcTipoCogedera" [(ngModel)]="slcTipoCogedera"
+                      (selectionChange)="validateShowInputAsas(slcTipoCogedera)">
+                      <mat-option *ngFor="let food of TipoCogedera" [value]="food.value">
+                        {{food.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                    <div *ngIf="blnTipoCogedera" style="color: brown;">El campo tipo de cogedera es obligatorio</div>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                  <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Tipo bolsa</mat-label>
+                    <mat-select id="slcTipoBolsa" [(ngModel)]="slcTipoBolsa"
+                      (selectionChange)="validateShowInputBolsas(slcTipoBolsa)"
+                      (ngModelChange)="CambiarImagen(slcTipoBolsa)">
+                      <mat-option *ngFor="let food of TipoBolsa" [value]="food.value">
+                        {{food.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                    <div *ngIf="blnTipoBolsa" style="color: brown;">El campo tipo de bolsa es obligatorio</div>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <mat-card class="card">
+                <div class="row justify-content-center" style="align-content: center;">
+                  <img src="../../../assets/img/bolsas/{{RutaImagen}}.png" width="160" height="130" class="mx-auto">
+                </div>
+              </mat-card>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Unidades requeridas</mat-label>
+                <input matInput id="txtUnidadesRequeridas" [(ngModel)]="txtUnidadesRequeridas">
+                <div *ngIf="blnUnidadesRequeridas" style="color: brown;">El campo unidades requeridas es obligatorio
+                </div>
+              </mat-form-field>
+            </div>
 
-      </div>
-      <div class="form-group col-md-6">
-        <label for="txtNombreContacto">Nombre contacto</label>
-        <input type="text" class="form-control" id="txtNombreContacto" [(ngModel)]="txtNombreContacto"
-          placeholder="Nombre de contacto">
-        <div *ngIf="blnNombreContacto" style="color: brown;">El campo nombre de contacto es obligatorio</div>
-      </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Ancho (cm)</mat-label>
+                <input matInput id="txtAncho_cm" [(ngModel)]="txtAncho_cm">
+                <div *ngIf="blnAncho_cm" style="color: brown;">El campo ancho (cm) es obligatorio</div>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Alto (cm)</mat-label>
+                <input matInput id="txtAlto_cm" [(ngModel)]="txtAlto_cm">
+                <div *ngIf="blnAlto_cm" style="color: brown;">El campo alto (cm) es obligatorio</div>
+              </mat-form-field>
+            </div>
 
-      <div class="form-group col-md-6">
-        <label for="txtNit">Nit / Cédula</label>
-        <input type="text" class="form-control" id="txtNit" [(ngModel)]="txtNit" placeholder="Nit / Cédula">
-        <div *ngIf="blnNit" style="color: brown;">El campo nit es obligatorio</div>
-      </div>
+            <div class="col-md-6" *ngIf="blnFuelleOpen">
+              <mat-form-field class="example-full-width">
+                <mat-label>Fuelle (cm)</mat-label>
+                <input matInput id="txtFuelle_cm" [(ngModel)]="txtFuelle_cm">
+                <div *ngIf="blnFuelle_cm" style="color: brown;">El campo fuelle (cm) es obligatorio</div>
+              </mat-form-field>
+            </div>
 
-      <div class="form-group col-md-6">
-        <label for="txtTel_Contacto">Tel. Contacto</label>
-        <input type="text" class="form-control" id="txtTel_Contacto" [(ngModel)]="txtTel_Contacto"
-          placeholder="Telefono de contacto">
-        <div *ngIf="blnTel_Contacto" style="color: brown;">El campo telefono de contacto es obligatorio</div>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtEmail">Email</label>
-        <input type="text" class="form-control" id="txtEmail" [(ngModel)]="txtEmail" placeholder="Correo electronico">
-        <div *ngIf="blnEmail" style="color: brown;">El campo email es obligatorio</div>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtFechaEntrega">Fecha de entrega</label>
-        <input type="text" class="form-control" id="txtFechaEntrega" [(ngModel)]="txtFechaEntrega"
-          placeholder="Fecha de entrega">
-        <div *ngIf="blnFechaEntrega" style="color: brown;">El campo fecha de entrega es obligatorio</div>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtCiudad">Ciudad</label>
-        <input type="text" class="form-control" id="txtCiudad" [(ngModel)]="txtCiudad" placeholder="Ciudad">
-        <div *ngIf="blnCiudad" style="color: brown;">El campo ciudad es obligatorio</div>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtDireccionDeEntrega">Dirección de entrega</label>
-        <input type="text" class="form-control" id="txtDireccionDeEntrega" [(ngModel)]="txtDireccionDeEntrega"
-          placeholder="Dirección de entrega">
-        <div *ngIf="blnDireccionDeEntrega" style="color: brown;">El campo dirección de entrega es obligatorio</div>
-      </div>
+            <div class="col-md-6" *ngIf="blnAsas">
+              <mat-form-field class="example-full-width">
+                <mat-label>Largo Asas (cm)</mat-label>
+                <input matInput id="txtLargoAsas_cm" [(ngModel)]="txtLargoAsas_cm">
+                <div *ngIf="blnLargoAsas_cm" style="color: brown;">El campo largo de asas (cm) es obligatorio</div>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
 
     </div>
-  </div>
 
-  <div class="col-md-4" style="border: 1px solid rgb(0, 42, 255)">
-    <div class="row">
-      <div class="form-group col-md-4">
-        <label for="txtUnidadesRequeridas">Unidades requeridas</label>
-        <input type="text" class="form-control" id="txtUnidadesRequeridas" [(ngModel)]="txtUnidadesRequeridas"
-          placeholder="Unidades requeridas">
-        <div *ngIf="blnUnidadesRequeridas" style="color: brown;">El campo unidades requeridas es obligatorio</div>
-      </div>
-      <div class="form-group col-md-4">
-        <label for="slcTipoBolsa">Tipo bolsa</label>
-        <select class="form-control" id="slcTipoBolsa" [(ngModel)]="slcTipoBolsa"
-          (change)="validateShowInputBolsas(slcTipoBolsa)">
-          <option>Plana</option>
-          <option>Base Fuelle</option>
-          <option>Fuelle completo</option>
-          <option>Tula</option>
-          <option>Plegable</option>
-          <option>joyeria</option>
-        </select>
-        <div *ngIf="blnTipoBolsa" style="color: brown;">El campo tipo de bolsa es obligatorio</div>
-      </div>
-      <div class="form-group col-md-4">
-        <label for="slcTipoCogedera">Tipo cogedera</label>
-        <select class="form-control" id="slcTipoCogedera" [(ngModel)]="slcTipoCogedera"
-          (change)="validateShowInputAsas(slcTipoCogedera)">
-          <option>Asas</option>
-          <option>Troquel</option>
-        </select>
-        <div *ngIf="blnTipoCogedera" style="color: brown;">El campo tipo de cogedera es obligatorio</div>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="txtAncho_cm">Ancho (cm)</label>
-        <input type="text" class="form-control" id="txtAncho_cm" [(ngModel)]="txtAncho_cm" placeholder="Ancho (cm)">
-        <div *ngIf="blnAncho_cm" style="color: brown;">El campo ancho (cm) es obligatorio</div>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="txtAlto_cm">Alto (cm)</label>
-        <input type="text" class="form-control" id="txtAlto_cm" [(ngModel)]="txtAlto_cm" placeholder="Alto (cm)">
-        <div *ngIf="blnAlto_cm" style="color: brown;">El campo alto (cm) es obligatorio</div>
-      </div>
+    <div class="col-md-5">
+      <mat-card class="card">
+        <mat-card-content>
+          <div class="col-md-12">
+            <h2 class="text-center">Material</h2>
+          </div>
+          <div class="row">
 
-      <div class="form-group col-md-6" *ngIf="blnFuelleOpen">
-        <label for="txtFuelle_cm">Fuelle (cm)</label>
-        <input type="text" class="form-control" id="txtFuelle_cm" [(ngModel)]="txtFuelle_cm" placeholder="Fuelle (cm)">
-        <div *ngIf="blnFuelle_cm" style="color: brown;">El campo fuelle (cm) es obligatorio</div>
-      </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Material</mat-label>
+                <mat-select id="slcMaterial" [(ngModel)]="slcMaterial">
+                  <mat-option *ngFor="let food of TipoMaterial" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <div *ngIf="blnTipoCogedera" style="color: brown;">El campo material es obligatorio</div>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Color</mat-label>
+                <input matInput id="txtColor" [(ngModel)]="txtColor">
+                <div *ngIf="blnColor" style="color: brown;">El campo color es obligatorio</div>
+              </mat-form-field>
+            </div>
 
-      <div class="form-group col-md-6" *ngIf="blnAsas">
-        <label for="txtLargoAsas_cm">Largo Asas (cm)</label>
-        <input type="text" class="form-control" id="txtLargoAsas_cm" [(ngModel)]="txtLargoAsas_cm"
-          placeholder="Largo Asas (cm)">
-        <div *ngIf="blnLargoAsas_cm" style="color: brown;">El campo largo de asas (cm) es obligatorio</div>
-      </div>
-    </div>
-  </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Estampado</mat-label>
+                <mat-select id="slcEstampado" [(ngModel)]="slcEstampado">
+                  <mat-option *ngFor="let food of TipoEstampado" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <div *ngIf="blnEstampado" style="color: brown;">El campo estampado es obligatorio</div>
+              </mat-form-field>
+            </div>
 
-  <div class="col-md-4" style="border: 1px solid rgb(106, 255, 0)">
-    <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Caras</mat-label>
+                <mat-select id="slcCaras" [(ngModel)]="slcCaras">
+                  <mat-option *ngFor="let food of NumeroCaras" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <div *ngIf="blnCaras" style="color: brown;">El campo caras es obligatorio</div>
+              </mat-form-field>
+            </div>
 
-      <div class="form-group col-md-6">
-        <label for="slcMaterial">Material</label>
-        <select class="form-control" id="slcMaterial" [(ngModel)]="slcMaterial"
-          (ngModelChange)="CambiarImagen(slcMaterial)">
-          <option>Kambrel</option>
-          <option>Kambrel - 70 gr</option>
-          <option>Kambrel - 90 gr</option>
-          <option>Kambrel - 110 gr</option>
-          <option>Madre Selva gr</option>
-          <option>Cerro Sport gr</option>
-          <option>Yute gr</option>
-          <option>Lienzo gr</option>
-          <option>Lino gr</option>
-          <option>Tafeta gr</option>
-          <option>Lona PVC gr</option>
-        </select>
-        <div *ngIf="blnMaterial" style="color: brown;">El campo material es obligatorio</div>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="txtColor">Color</label>
-        <input type="text" class="form-control" id="txtColor" [(ngModel)]="txtColor" placeholder="Color">
-        <div *ngIf="blnColor" style="color: brown;">El campo color es obligatorio</div>
-      </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Numero de tintas</mat-label>
+                <mat-select id="slcNumeroTintas" [(ngModel)]="slcNumeroTintas">
+                  <mat-option *ngFor="let food of NumeroTintas" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <div *ngIf="blnNumeroTintas" style="color: brown;">El campo número de tintas es obligatorio</div>
+              </mat-form-field>
+            </div>
 
-      <div class="form-group col-md-6">
-        <label for="slcEstampado">Estampado</label>
-        <select class="form-control" id="slcEstampado" [(ngModel)]="slcEstampado">
-          <option>Sin estampado</option>
-          <option>Tinta plana</option>
-          <option>Policromia</option>
-        </select>
-        <div *ngIf="blnEstampado" style="color: brown;">El campo estampado es obligatorio</div>
-      </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Color tintas</mat-label>
+                <input type="color" matInput id="txtColorTintas" [(ngModel)]="txtColorTintas">
+                <div *ngIf="blnColorTintas" style="color: brown;">El campo color de tintas es obligatorio</div>
+              </mat-form-field>
+            </div>
 
-      <div class="form-group col-md-6">
-        <label for="slcCaras">Caras</label>
-        <select class="form-control" id="slcCaras" [(ngModel)]="slcCaras">
-          <option>1</option>
-          <option>2</option>
-        </select>
-        <div *ngIf="blnCaras" style="color: brown;">El campo caras es obligatorio</div>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="slcNumeroTintas">Numero de tintas</label>
-        <select class="form-control" id="slcNumeroTintas" [(ngModel)]="slcNumeroTintas">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-        </select>
-        <div *ngIf="blnNumeroTintas" style="color: brown;">El campo número de tintas es obligatorio</div>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtColorTintas">Color tintas</label>
-        <input type="text" class="form-control" id="txtColorTintas" [(ngModel)]="txtColorTintas"
-          placeholder="Color tintas: ">
-        <div *ngIf="blnColorTintas" style="color: brown;">El campo color de tintas es obligatorio</div>
-      </div>
-
-      <div class="col-md-12 text-center">
-        <button type="button" class="btn btn-primary btn-lg text-center" (click)="CalcularCorte()">Cotizar</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6" style="border: 1px solid rgb(216, 124, 18)">
-    <div class="row justify-content-center text-center">
-      <div class="col-md-12">
-        <img src="../../../assets/img/bolsas/{{RutaImagen}}.png" width="284" height="263" class="mx-auto">
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6" style="border: 1px solid rgb(18, 160, 216)">
-    <div class="row">
-
-      <div class="form-group col-md-6">
-        <label for="txtHolguraAncho_cm">Holgura ancho (cm)</label>
-        <input type="number" class="form-control" id="txtHolguraAncho_cm" [(ngModel)]="txtHolguraAncho_cm"
-          placeholder="Holgura ancho (cm)" disabled>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="txtHolguraAlto_cm">Holgura alto (cm)</label>
-        <input type="number" class="form-control" id="txtHolguraAlto_cm" [(ngModel)]="txtHolguraAlto_cm"
-          placeholder="Holgura alto (cm)" disabled>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtFuelleAlto_cm">Fuelle alto (cm)</label>
-        <input type="number" class="form-control" id="txtFuelleAlto_cm" [(ngModel)]="txtFuelleAlto_cm"
-          placeholder="Fuelle alto (cm)" disabled>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtLargoAsas_cm">Fuelle ancho (cm)</label>
-        <input type="number" class="form-control" id="txtFuelleAncho_cm" [(ngModel)]="txtFuelleAncho_cm"
-          placeholder="Fuelle ancho (cm))" disabled>
-      </div>
-
-      <div class="col-md-12">
-        <hr>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtFuelle_cm">Corte alto (cm)</label>
-        <input type="text" class="form-control" id="txtCorteAlto_cm" [(ngModel)]="txtCorteAlto_cm"
-          placeholder="Corte alto (cm)" disabled>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtCorteAncho_cm">Corte ancho (cm)</label>
-        <input type="number" class="form-control" id="txtCorteAncho_cm" [(ngModel)]="txtCorteAncho_cm"
-          placeholder="Corte ancho (cm)" disabled>
-      </div>
-
-
-      <div class="form-group col-md-6">
-        <label for="txtMetrosRequeridosHorizontal">Metros requeridos horizontal</label>
-        <input type="text" class="form-control" id="txtMetrosRequeridosHorizontal"
-          [(ngModel)]="txtMetrosRequeridosHorizontal" placeholder="Metros requeridos horizontal" disabled>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtMetrosRequeridosVertical">Metros requeridos vertical</label>
-        <input type="text" class="form-control" id="txtMetrosRequeridosVertical"
-          [(ngModel)]="txtMetrosRequeridosVertical" placeholder="Metros requeridos vertical" disabled>
-      </div>
-
-
-      <div class="form-group col-md-12" *ngIf="blnShowImagenCorte">
-        <img src="../../../assets/img/{{RutaImagenCorte}}.png" width="150" height="150" class="mx-auto">
-      </div>
-
-      <!-- ---------------------- -->
-
-      <div class="form-group col-md-6">
-        <label for="txtMetrosSobranteHorizontal">Metros sobrante horizontal</label>
-        <input type="text" class="form-control" id="txtMetrosSobranteHorizontal"
-          [(ngModel)]="txtMetrosSobranteHorizontal" placeholder="Metros requeridos vertical" disabled>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtMetrosSobranteVertical">Metros sobrante vertical</label>
-        <input type="text" class="form-control" id="txtMetrosSobranteVertical" [(ngModel)]="txtMetrosSobranteVertical"
-          placeholder="Metros requeridos vertical" disabled>
-      </div>
-
-      <div class="form-group col-md-12" *ngIf="blnShowImagenSobrante">
-        <img src="../../../assets/img/{{RutaImagenSobrante}}.png" width="150" height="150" class="mx-auto">
-      </div>
+            <div class="col-md-12 text-center">
+              <button type="button" class="btn btn-primary btn-lg text-center"
+                (click)="CalcularCorte()">Cotizar</button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
 
     </div>
-  </div>
 
-  <div class="col-md-6" style="border: 1px solid rgb(255, 50, 170)">
-    <div class="row">
+    <!-- <div class="col-md-6">
+      <div class="row">
 
-      <div class="form-group col-md-3">
-        <label for="txtResultadoCorte">Total Corte</label>
-        <input type="number" class="form-control" id="txtResultadoCorte" [(ngModel)]="strResultadoCorte"
-          placeholder="Total Corte" disabled>
+        <div class="form-group col-md-6">
+          <label for="txtHolguraAncho_cm">Holgura ancho (cm)</label>
+          <input type="number" class="form-control" id="txtHolguraAncho_cm" [(ngModel)]="txtHolguraAncho_cm"
+            placeholder="Holgura ancho (cm)" disabled>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="txtHolguraAlto_cm">Holgura alto (cm)</label>
+          <input type="number" class="form-control" id="txtHolguraAlto_cm" [(ngModel)]="txtHolguraAlto_cm"
+            placeholder="Holgura alto (cm)" disabled>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="txtFuelleAlto_cm">Fuelle alto (cm)</label>
+          <input type="number" class="form-control" id="txtFuelleAlto_cm" [(ngModel)]="txtFuelleAlto_cm"
+            placeholder="Fuelle alto (cm)" disabled>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="txtLargoAsas_cm">Fuelle ancho (cm)</label>
+          <input type="number" class="form-control" id="txtFuelleAncho_cm" [(ngModel)]="txtFuelleAncho_cm"
+            placeholder="Fuelle ancho (cm))" disabled>
+        </div>
+
+        <div class="col-md-12">
+          <hr>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="txtFuelle_cm">Corte alto (cm)</label>
+          <input type="text" class="form-control" id="txtCorteAlto_cm" [(ngModel)]="txtCorteAlto_cm"
+            placeholder="Corte alto (cm)" disabled>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="txtCorteAncho_cm">Corte ancho (cm)</label>
+          <input type="number" class="form-control" id="txtCorteAncho_cm" [(ngModel)]="txtCorteAncho_cm"
+            placeholder="Corte ancho (cm)" disabled>
+        </div>
+
+
+        <div class="form-group col-md-6">
+          <label for="txtMetrosRequeridosHorizontal">Metros requeridos horizontal</label>
+          <input type="text" class="form-control" id="txtMetrosRequeridosHorizontal"
+            [(ngModel)]="txtMetrosRequeridosHorizontal" placeholder="Metros requeridos horizontal" disabled>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="txtMetrosRequeridosVertical">Metros requeridos vertical</label>
+          <input type="text" class="form-control" id="txtMetrosRequeridosVertical"
+            [(ngModel)]="txtMetrosRequeridosVertical" placeholder="Metros requeridos vertical" disabled>
+        </div>
+
+
+        <div class="form-group col-md-12" *ngIf="blnShowImagenCorte">
+          <img src="../../../assets/img/{{RutaImagenCorte}}.png" width="150" height="150" class="mx-auto">
+        </div>
+
+      
+
+        <div class="form-group col-md-6">
+          <label for="txtMetrosSobranteHorizontal">Metros sobrante horizontal</label>
+          <input type="text" class="form-control" id="txtMetrosSobranteHorizontal"
+            [(ngModel)]="txtMetrosSobranteHorizontal" placeholder="Metros requeridos vertical" disabled>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="txtMetrosSobranteVertical">Metros sobrante vertical</label>
+          <input type="text" class="form-control" id="txtMetrosSobranteVertical" [(ngModel)]="txtMetrosSobranteVertical"
+            placeholder="Metros requeridos vertical" disabled>
+        </div>
+
+        <div class="form-group col-md-12" *ngIf="blnShowImagenSobrante">
+          <img src="../../../assets/img/{{RutaImagenSobrante}}.png" width="150" height="150" class="mx-auto">
+        </div>
+
       </div>
-      <div class="form-group col-md-3">
-        <label for="txtResultadoFuelleCompleto">Total fuelle</label>
-        <input type="number" class="form-control" id="txtResultadoFuelleCompleto"
-          [(ngModel)]="strResultadoFuelleCompleto" placeholder="Total fuelle" disabled>
+    </div> -->
+
+    <!-- <div class="col-md-6">
+      <div class="row">
+
+        <div class="form-group col-md-3">
+          <label for="txtResultadoCorte">Total Corte</label>
+          <input type="number" class="form-control" id="txtResultadoCorte" [(ngModel)]="strResultadoCorte"
+            placeholder="Total Corte" disabled>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="txtResultadoFuelleCompleto">Total fuelle</label>
+          <input type="number" class="form-control" id="txtResultadoFuelleCompleto"
+            [(ngModel)]="strResultadoFuelleCompleto" placeholder="Total fuelle" disabled>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="txtResultadoAsas">Total Asas</label>
+          <input type="number" class="form-control" id="txtResultadoAsas" [(ngModel)]="strResultadoAsas"
+            placeholder="Total Asas" disabled>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="txtResultadoTotal">Total resultado</label>
+          <input type="number" class="form-control" id="txtResultadoTotal" [(ngModel)]="strResultadoTotal"
+            placeholder="Total resultado" disabled>
+        </div>
+
+
+       
+
+
+        <div class="form-group col-md-6">
+          <label for="txtCostoMaterial">Total Material</label>
+          <input type="number" class="form-control" id="txtCostoMaterial" [(ngModel)]="strCostoMaterial"
+            placeholder="Total Material" disabled>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="txtCostoConfeccion">Total Confección</label>
+          <input type="number" class="form-control" id="txtCostoConfeccion" [(ngModel)]="strCostoConfeccion"
+            placeholder="Total Confección" disabled>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="txtCostoImpresion">Total Impresion</label>
+          <input type="number" class="form-control" id="txtCostoImpresion" [(ngModel)]="strCostoImpresion"
+            placeholder="Total Impresion" disabled>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="txtTOTAL_COSTOS">Total Costos</label>
+          <input type="number" class="form-control" id="txtTOTAL_COSTOS" [(ngModel)]="strTOTAL_COSTOS"
+            placeholder="Total Costos" disabled>
+        </div>
+
+        <div class="form-group col-md-12">
+          <label for="txtValor_TOTAL_Bolsa">Valor por bolsa</label>
+          <input type="number" class="form-control" id="txtValor_TOTAL_Bolsa" [(ngModel)]="strValor_TOTAL_Bolsa"
+            placeholder="Valor por bolsa" disabled>
+        </div>
       </div>
+    </div> -->
 
-      <div class="form-group col-md-3">
-        <label for="txtResultadoAsas">Total Asas</label>
-        <input type="number" class="form-control" id="txtResultadoAsas" [(ngModel)]="strResultadoAsas"
-          placeholder="Total Asas" disabled>
-      </div>
+    <div class="col-md-12" *ngIf="strValor_TOTAL_Bolsa">
+      <mat-card class="card">
+        <mat-card-content>
+          <div class="col-md-12">
+            <h2 class="text-center">Cotización</h2>
+          </div>
 
-      <div class="form-group col-md-3">
-        <label for="txtResultadoTotal">Total resultado</label>
-        <input type="number" class="form-control" id="txtResultadoTotal" [(ngModel)]="strResultadoTotal"
-          placeholder="Total resultado" disabled>
-      </div>
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Valor Bolsa:</mat-label>
+                      <input matInput [(ngModel)]="strValor_TOTAL_Bolsa" disabled>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Utilidad:</mat-label>
+                      <input matInput [(ngModel)]="strUtilidad" (keyup)="CalcularCotizacionFinal(true)">
+                    </mat-form-field>
+                  </div>
+
+                
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="form-group example-full-width">
+                    <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource">
+                      <ng-container matColumnDef="description">
+                        <mat-header-cell *matHeaderCellDef>Precio Venta</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="unitPrice">
+                        <mat-header-cell *matHeaderCellDef>Unitario</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.unitPrice |
+                          currency:'$':'symbol-narrow'}}</mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="totalPrice">
+                        <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.totalPrice |
+                          currency:'$':'symbol-narrow'}}</mat-cell>
+                      </ng-container>
+
+                      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
 
 
 
-      <!-- Lo bueno -->
-
-
-      <div class="form-group col-md-6">
-        <label for="txtCostoMaterial">Total Material</label>
-        <input type="number" class="form-control" id="txtCostoMaterial" [(ngModel)]="strCostoMaterial"
-          placeholder="Total Material" disabled>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="txtCostoConfeccion">Total Confección</label>
-        <input type="number" class="form-control" id="txtCostoConfeccion" [(ngModel)]="strCostoConfeccion"
-          placeholder="Total Confección" disabled>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtCostoImpresion">Total Impresion</label>
-        <input type="number" class="form-control" id="txtCostoImpresion" [(ngModel)]="strCostoImpresion"
-          placeholder="Total Impresion" disabled>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="txtTOTAL_COSTOS">Total Costos</label>
-        <input type="number" class="form-control" id="txtTOTAL_COSTOS" [(ngModel)]="strTOTAL_COSTOS"
-          placeholder="Total Costos" disabled>
-      </div>
-
-      <div class="form-group col-md-12">
-        <label for="txtValor_TOTAL_Bolsa">Valor por bolsa</label>
-        <input type="number" class="form-control" id="txtValor_TOTAL_Bolsa" [(ngModel)]="strValor_TOTAL_Bolsa"
-          placeholder="Valor por bolsa" disabled>
-      </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
-</div>
+</body>
