@@ -1,5 +1,6 @@
-import { Component,ViewEncapsulation  } from '@angular/core';
+import { Component,ViewEncapsulation,TemplateRef   } from '@angular/core';
 import { CotizadorService } from "../../services/cotizador.service";
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -56,9 +57,61 @@ export class MaterialesComponent {
   }]
 
   editingItem: any = null;
- 
+  panelOpenState = false;
 
-  constructor(private cotizadorService: CotizadorService) { }
+
+  
+  constructor(private cotizadorService: CotizadorService,private modalService: BsModalService) { }
+
+  modalRef?: BsModalRef;
+  config = {
+    animated: true
+  };
+
+  openModalDeleteMaterial(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+ 
+  confirmDeleteMaterial(): void {
+    this.modalRef?.hide();
+  }
+
+  //
+
+  openModalDeleteImpresion(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+ 
+  confirmDeleteImpresion(): void {
+    this.modalRef?.hide();
+  }
+  //
+
+  openModalDeleteConfeccion(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+ 
+  confirmDeleteConfeccion(): void {
+    this.modalRef?.hide();
+  }
+
+  //
+
+  openModalDeleteCordon(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+ 
+  confirmDeleteCordon(): void {
+    this.modalRef?.hide();
+  }
+ 
+  declineDelete(): void {
+    this.modalRef?.hide();
+  }
+ 
+  // openModal(template: TemplateRef<any>) {
+  //   this.modalRef = this.modalService.show(template, this.config);
+  // }
 
   ngOnInit() {
     this.ObtenerMateriales();
@@ -76,6 +129,8 @@ export class MaterialesComponent {
         console.log(err)
       }
     );
+
+    
   }
 
   ObtenerImpresiones() {
@@ -126,12 +181,6 @@ export class MaterialesComponent {
     let numeroEntero: number = valor * intMultiplicacion;
     return numeroEntero.toLocaleString();
   }
-
-
-  EliminarMaterial(material:object){
-    console.log("Eliminar material", material)
-  }
-
 
   EditarMaterial(material:object, id:string){
 
