@@ -1,3 +1,23 @@
-body {
-    /* background-image:  url('../assets/img/EcoBackGround.png') */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+
+.example-drawer {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.24);
+}
+
+.example-drawer__content {
+  height: 100%;
+  width: calc(25vw - 60px);
+  max-width: 400px;
+  padding: 30px;
+  box-sizing: border-box;
 }
