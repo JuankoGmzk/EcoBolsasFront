@@ -23,12 +23,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatDividerModule} from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
@@ -56,11 +59,15 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MatCardModule,
     MatSelectModule,
     MatToolbarModule,
+    MatIconModule,
     MatTableModule,
     MatDialogModule,
     MatSliderModule,
     MatExpansionModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    MatSidenavModule,
+    MatDividerModule,
+    MatListModule
   ],
   providers: [
     AuthGuard,
