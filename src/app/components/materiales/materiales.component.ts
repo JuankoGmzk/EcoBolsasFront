@@ -57,7 +57,10 @@ export class MaterialesComponent {
   }]
 
   editingItem: any = null;
-  panelOpenState = false;
+  panelOpenMateriales = false;
+  panelOpenImpresiones = false;
+  panelOpenConfecciones = false;
+  panelOpenCordones = false;
 
 
   

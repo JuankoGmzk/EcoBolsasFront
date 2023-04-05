@@ -1,5 +1,6 @@
 <mat-accordion>
-    <mat-expansion-panel hideToggle>
+    <mat-expansion-panel (opened)="panelOpenMateriales = true"
+    (closed)="panelOpenMateriales = false">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Materiales
@@ -92,7 +93,8 @@
             </mat-card-content>
         </mat-card>
     </mat-expansion-panel>
-    <mat-expansion-panel hideToggle>
+    <mat-expansion-panel (opened)="panelOpenImpresiones = true"
+    (closed)="panelOpenImpresiones = false">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Screen
@@ -159,8 +161,8 @@
             </mat-card-content>
         </mat-card>
     </mat-expansion-panel>
-
-    <mat-expansion-panel hideToggle>
+    <mat-expansion-panel (opened)="panelOpenConfecciones = true"
+    (closed)="panelOpenConfecciones = false">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Confección
@@ -227,8 +229,8 @@
             </mat-card-content>
         </mat-card>
     </mat-expansion-panel>
-
-    <mat-expansion-panel hideToggle>
+    <mat-expansion-panel (opened)="panelOpenCordones = true"
+    (closed)="panelOpenCordones = false">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Cordon
