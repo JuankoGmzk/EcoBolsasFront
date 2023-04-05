@@ -195,15 +195,8 @@ export class CotizadorComponent {
 
   displayedColumns = ['description',  'unitPrice', 'totalPrice'];
 
-  constructor(private cotizadorService: CotizadorService,public dialog: MatDialog) { }
+  constructor(private cotizadorService: CotizadorService) { }
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DialogAnimationsExampleDialog, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
-  }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     // Only highligh dates inside the month view.
@@ -520,12 +513,4 @@ export class CotizadorComponent {
   CambiarImagen(strMaterial: string) {
     this.RutaImagen = strMaterial;
   }
-}
-
-@Component({
-  selector: 'dialog-animations-example-dialog',
-  templateUrl: 'a.html',
-})
-export class DialogAnimationsExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
 }
