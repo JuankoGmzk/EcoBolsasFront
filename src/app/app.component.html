@@ -1,28 +1,8 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!-- 
-<mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side">
-    <mat-list>
-      <mat-list-item>Item 1</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Item 2</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Item 3</mat-list-item>
-    </mat-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <mat-icon type="button" (click)="toggleSidenav()" class="example-icon mr-3" aria-hidden="false" aria-label="Example heart icon">menu</mat-icon>
-      <span class="mr-3">EcoBolsas</span>
-      <span class="example-spacer"></span>
-      <mat-icon class="example-icon mr-3" aria-hidden="false" aria-label="Example delete icon">share</mat-icon>
-    </mat-toolbar>
-  </mat-sidenav-content>
-</mat-sidenav-container> -->
-
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+  <nav *ngIf="currentRoute !== '/signin'" class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
 
       <a class="navbar-brand" href="#"><img width="130" height="80"
@@ -30,35 +10,25 @@
           alt="" loading="lazy"
           srcset="https://ecobolsas.co/wp-content/uploads/2020/12/logo-300x162.png 300w, https://ecobolsas.co/wp-content/uploads/2020/12/logo.png 493w"
           sizes="(max-width: 200px) 50vw, 150px"></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" routerLink="/tasks" routerLinkActive="active">Pedidos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/private" routerLinkActive="active">Pedidos privados</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/createTask" routerLinkActive="active">Crear pedido</a>
-          </li>
-        </ul>
+        
         <ul class="navbar-nav ml-auto">
           <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
             <li class="nav-item">
               <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar sesión</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registrarme</a>
-            </li>
           </ng-container>
           <ng-template #loggedIn>
             <li class="nav-item">
-              <a class="nav-link" style="cursor: pointer;" (click)="authService.logout()">Salir</a>
+              <a class="nav-link" routerLink="/lobby" routerLinkActive="active">Home</a>
             </li>
+            <li class="nav-item ">
+              <a class="nav-link" routerLink="/tasks" routerLinkActive="active">Perfil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer;" (click)="authService.logout()">Salir</a>
+            </li> 
           </ng-template>
         </ul>
       </div>
