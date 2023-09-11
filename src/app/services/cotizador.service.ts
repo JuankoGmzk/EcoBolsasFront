@@ -53,5 +53,12 @@ export class CotizadorService {
     return this.http.post<any>(this.URL + '/CogederaById',confeccion)
   }
 
+  postCrearCotizacion(datosCotizador:object){
+    return this.http.post<any>(this.URL+'/Cotizar', datosCotizador)
+  }
+
+  postCrearYGuardarCotizacion(datosCotizador:object){
+    return this.http.post<any>(this.URL+'/CrearCotizacion', datosCotizador)
+  }
 
 }
