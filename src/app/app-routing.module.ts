@@ -4,22 +4,24 @@ import { RouterModule, Routes } from '@angular/router';
 //Components
 import {TaskComponent} from './components/task/task.component';
 import {PrivateTaskComponent} from './components/private-task/private-task.component';
-import {SigupComponent} from './components/sigup/sigup.component';
+import {SigupComponent} from './components/crearUsuario/sigup.component';
 import {SigninComponent} from './components/signin/signin.component';
 import { CreateTaskComponent } from "./components/create-task/create-task.component";
 import { CotizadorComponent } from "./components/cotizador/cotizador.component";
 import { MaterialesComponent } from "./components/materiales/materiales.component";
+import { LobbyComponent } from "./components/lobby/lobby.component"
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  { path : '', component : TaskComponent, pathMatch : 'full' },
+  { path : '', component : LobbyComponent, pathMatch : 'full' },
   { path : 'tasks', component : TaskComponent },
   { path : 'private', component : PrivateTaskComponent,canActivate: [AuthGuard]},
   { path : 'signup', component : SigupComponent},
   { path : 'signin', component : SigninComponent},
   { path : 'createTask', component: CreateTaskComponent,canActivate: [AuthGuard]},
   { path : 'cotizador', component: CotizadorComponent},
-  { path : 'materiales', component:MaterialesComponent}
+  { path : 'materiales', component:MaterialesComponent},
+  { path : 'lobby', component:LobbyComponent}
 ];
 
 @NgModule({
