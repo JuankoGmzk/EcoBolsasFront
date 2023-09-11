@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
-import { SigupComponent } from './components/sigup/sigup.component';
+import { SigupComponent } from './components/crearUsuario/sigup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { TaskComponent } from './components/task/task.component';
 import { PrivateTaskComponent } from './components/private-task/private-task.component';
@@ -32,6 +32,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatDividerModule} from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { LobbyComponent } from './components/lobby/lobby.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { MatListModule } from '@angular/material/list';
     PrivateTaskComponent,
     CreateTaskComponent,
     CotizadorComponent,
-    MaterialesComponent
+    MaterialesComponent,
+    LobbyComponent
   ],
   imports: [
     BrowserModule,
