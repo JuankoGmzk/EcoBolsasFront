@@ -159,7 +159,6 @@
           </div>
         </mat-card-content>
       </mat-card>
-
     </div>
 
     <div class="col-md-5">
@@ -235,163 +234,19 @@
 
             <div class="col-md-12 text-center">
               <button type="button" class="btn btn-primary btn-lg text-center"
-                (click)="CalcularCorte()">Cotizar</button>
+                (click)="CalcularCorteBackend()">Cotizar</button>
             </div>
           </div>
         </mat-card-content>
       </mat-card>
-
     </div>
 
-    <!-- <div class="col-md-6">
-      <div class="row">
-
-        <div class="form-group col-md-6">
-          <label for="txtHolguraAncho_cm">Holgura ancho (cm)</label>
-          <input type="number" class="form-control" id="txtHolguraAncho_cm" [(ngModel)]="txtHolguraAncho_cm"
-            placeholder="Holgura ancho (cm)" disabled>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="txtHolguraAlto_cm">Holgura alto (cm)</label>
-          <input type="number" class="form-control" id="txtHolguraAlto_cm" [(ngModel)]="txtHolguraAlto_cm"
-            placeholder="Holgura alto (cm)" disabled>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for="txtFuelleAlto_cm">Fuelle alto (cm)</label>
-          <input type="number" class="form-control" id="txtFuelleAlto_cm" [(ngModel)]="txtFuelleAlto_cm"
-            placeholder="Fuelle alto (cm)" disabled>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for="txtLargoAsas_cm">Fuelle ancho (cm)</label>
-          <input type="number" class="form-control" id="txtFuelleAncho_cm" [(ngModel)]="txtFuelleAncho_cm"
-            placeholder="Fuelle ancho (cm))" disabled>
-        </div>
-
-        <div class="col-md-12">
-          <hr>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for="txtFuelle_cm">Corte alto (cm)</label>
-          <input type="text" class="form-control" id="txtCorteAlto_cm" [(ngModel)]="txtCorteAlto_cm"
-            placeholder="Corte alto (cm)" disabled>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for="txtCorteAncho_cm">Corte ancho (cm)</label>
-          <input type="number" class="form-control" id="txtCorteAncho_cm" [(ngModel)]="txtCorteAncho_cm"
-            placeholder="Corte ancho (cm)" disabled>
-        </div>
-
-
-        <div class="form-group col-md-6">
-          <label for="txtMetrosRequeridosHorizontal">Metros requeridos horizontal</label>
-          <input type="text" class="form-control" id="txtMetrosRequeridosHorizontal"
-            [(ngModel)]="txtMetrosRequeridosHorizontal" placeholder="Metros requeridos horizontal" disabled>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for="txtMetrosRequeridosVertical">Metros requeridos vertical</label>
-          <input type="text" class="form-control" id="txtMetrosRequeridosVertical"
-            [(ngModel)]="txtMetrosRequeridosVertical" placeholder="Metros requeridos vertical" disabled>
-        </div>
-
-
-        <div class="form-group col-md-12" *ngIf="blnShowImagenCorte">
-          <img src="../../../assets/img/{{RutaImagenCorte}}.png" width="150" height="150" class="mx-auto">
-        </div>
-
-      
-
-        <div class="form-group col-md-6">
-          <label for="txtMetrosSobranteHorizontal">Metros sobrante horizontal</label>
-          <input type="text" class="form-control" id="txtMetrosSobranteHorizontal"
-            [(ngModel)]="txtMetrosSobranteHorizontal" placeholder="Metros requeridos vertical" disabled>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for="txtMetrosSobranteVertical">Metros sobrante vertical</label>
-          <input type="text" class="form-control" id="txtMetrosSobranteVertical" [(ngModel)]="txtMetrosSobranteVertical"
-            placeholder="Metros requeridos vertical" disabled>
-        </div>
-
-        <div class="form-group col-md-12" *ngIf="blnShowImagenSobrante">
-          <img src="../../../assets/img/{{RutaImagenSobrante}}.png" width="150" height="150" class="mx-auto">
-        </div>
-
-      </div>
-    </div> -->
-
-    <!-- <div class="col-md-6">
-      <div class="row">
-
-        <div class="form-group col-md-3">
-          <label for="txtResultadoCorte">Total Corte</label>
-          <input type="number" class="form-control" id="txtResultadoCorte" [(ngModel)]="strResultadoCorte"
-            placeholder="Total Corte" disabled>
-        </div>
-        <div class="form-group col-md-3">
-          <label for="txtResultadoFuelleCompleto">Total fuelle</label>
-          <input type="number" class="form-control" id="txtResultadoFuelleCompleto"
-            [(ngModel)]="strResultadoFuelleCompleto" placeholder="Total fuelle" disabled>
-        </div>
-
-        <div class="form-group col-md-3">
-          <label for="txtResultadoAsas">Total Asas</label>
-          <input type="number" class="form-control" id="txtResultadoAsas" [(ngModel)]="strResultadoAsas"
-            placeholder="Total Asas" disabled>
-        </div>
-
-        <div class="form-group col-md-3">
-          <label for="txtResultadoTotal">Total resultado</label>
-          <input type="number" class="form-control" id="txtResultadoTotal" [(ngModel)]="strResultadoTotal"
-            placeholder="Total resultado" disabled>
-        </div>
-
-
-       
-
-
-        <div class="form-group col-md-6">
-          <label for="txtCostoMaterial">Total Material</label>
-          <input type="number" class="form-control" id="txtCostoMaterial" [(ngModel)]="strCostoMaterial"
-            placeholder="Total Material" disabled>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="txtCostoConfeccion">Total Confección</label>
-          <input type="number" class="form-control" id="txtCostoConfeccion" [(ngModel)]="strCostoConfeccion"
-            placeholder="Total Confección" disabled>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for="txtCostoImpresion">Total Impresion</label>
-          <input type="number" class="form-control" id="txtCostoImpresion" [(ngModel)]="strCostoImpresion"
-            placeholder="Total Impresion" disabled>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for="txtTOTAL_COSTOS">Total Costos</label>
-          <input type="number" class="form-control" id="txtTOTAL_COSTOS" [(ngModel)]="strTOTAL_COSTOS"
-            placeholder="Total Costos" disabled>
-        </div>
-
-        <div class="form-group col-md-12">
-          <label for="txtValor_TOTAL_Bolsa">Valor por bolsa</label>
-          <input type="number" class="form-control" id="txtValor_TOTAL_Bolsa" [(ngModel)]="strValor_TOTAL_Bolsa"
-            placeholder="Valor por bolsa" disabled>
-        </div>
-      </div>
-    </div> -->
-
-    <div class="col-md-12" *ngIf="strValor_TOTAL_Bolsa">
+    <div class="col-md-12" *ngIf="blnCotizacionTable">
       <mat-card class="card">
         <mat-card-content>
           <div class="col-md-12">
             <h2 class="text-center">Cotización</h2>
           </div>
-
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-6">
@@ -399,17 +254,17 @@
                   <div class="col-md-6">
                     <mat-form-field class="example-full-width">
                       <mat-label>Valor Bolsa:</mat-label>
-                      <input matInput [(ngModel)]="strValor_TOTAL_Bolsa" disabled>
+                      <input matInput [(ngModel)]="respuestaCotizacion.ValorPorBolsa" disabled>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6">
                     <mat-form-field class="example-full-width">
                       <mat-label>Utilidad:</mat-label>
-                      <input matInput [(ngModel)]="strUtilidad" (keyup)="CalcularCotizacionFinal(true)">
+                      <input matInput [(ngModel)]="strUtilidad" (keyup)="CambiarUtilidad('true')">
                     </mat-form-field>
                   </div>
 
-                
+
                 </div>
               </div>
 
@@ -438,12 +293,23 @@
                   </div>
                 </div>
               </div>
-
+              <div class="row">
+                <div class="col-md-5">
+                  <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                  <label class="btn btn-outline-success" for="btn-check-outlined">Check Cliente</label>
+                  <input type="checkbox" class="btn-check" id="btn-check-outlined2" autocomplete="off">
+                  <label class="btn btn-outline-success" for="btn-check-outlined2">Dinero cliente</label><br>
+                </div>
+                <div class="col-md-7">
+                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="GuardarCotizacionBackend()">Guardar</button>
+                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="{}">Generar PDF</button>
+                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="{}">Editar</button>
+                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="{}">Generar OT</button>
+                </div>
+              </div>
+              
             </div>
           </div>
-
-
-
         </mat-card-content>
       </mat-card>
     </div>
