@@ -1,8 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { CotizadorService } from "../../services/cotizador.service";
-import { from, of, switchMap } from 'rxjs';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 
 
@@ -26,55 +24,55 @@ export class CotizadorComponent {
 
   @ViewChild(MatTable) table!: MatTable<any>;
 
-  
-  
+
+
   TipoCogedera: InputSelect[] = [
-    {value: 'Asas', viewValue: 'Asas'},
-    {value: 'Troquel', viewValue: 'Troquel'}
+    { value: 'Asas', viewValue: 'Asas' },
+    { value: 'Troquel', viewValue: 'Troquel' }
   ];
 
-  TipoBolsa: InputSelect[] = [
-    {value: 'Plana', viewValue: 'Plana'},
-    {value: 'Base Fuelle', viewValue: 'Base Fuelle'},
-    {value: 'Fuelle completo', viewValue: 'Fuelle completo'},
-    {value: 'Tula', viewValue: 'Tula'},
-    {value: 'Plegable', viewValue: 'Plegable'},
-    {value: 'Troquel', viewValue: 'Troquel'},
-    {value: 'joyeria', viewValue: 'joyeria'}
+  TipoBolsa: InputSelect[] = [];
+  TipoMaterial: InputSelect[] = [];
+  TipoEstampado: InputSelect[] = [];
+
+  NumeroCaras: InputSelect[] = [
+    { value: '1', viewValue: '1' },
+    { value: '2', viewValue: '2' }
   ];
 
-  TipoMaterial: InputSelect[] = [
-    {value: 'Kambrel', viewValue: 'Kambrel'},
-    {value: 'Kambrel - 70 gr', viewValue: 'Kambrel - 70 gr'},
-    {value: 'Kambrel - 90 gr', viewValue: 'Kambrel - 90 gr'},
-    {value: 'Kambrel - 110 gr', viewValue: 'Kambrel - 110 gr'},
-    {value: 'Madre Selva gr', viewValue: 'Madre Selva gr'},
-    {value: 'Cerro Sport gr', viewValue: 'Cerro Sport gr'},
-    {value: 'Yute gr', viewValue: 'Yute gr'},
-    {value: 'Lienzo gr', viewValue: 'Lienzo gr'},
-    {value: 'Lino gr', viewValue: 'Lino gr'},
-    {value: 'Tafeta gr', viewValue: 'Tafeta gr'},
-    {value: 'Lona PVC gr', viewValue: 'Lona PVC gr'}
+  NumeroTintas: InputSelect[] = [
+    { value: '1', viewValue: '1' },
+    { value: '2', viewValue: '2' },
+    { value: '3', viewValue: '3' }
   ];
 
-  TipoEstampado: InputSelect[]=[
-    {value: 'Sin estampado', viewValue: 'Sin estampado'},
-    {value: 'Tinta plana', viewValue: 'Tinta plana'},
-    {value: 'Policromia', viewValue: 'Policromia'}
-  ];
+  respuestaCotizacion = {
+    PVSinIvaUnitario: '',
+    PVSinIvaTotal: '',
+    PVConIvaUnitario: '',
+    PVConIvaTotal: '',
+    IVA19Unitario: '',
+    IVA19Total: '',
 
-  NumeroCaras: InputSelect []=[
-    {value: '1', viewValue: '1'},
-    {value: '2', viewValue: '2'}
-  ];
+    PTMaterial: '',
+    PTConfeccion: '',
+    PTCorte: '',
+    PTImpresion: '',
+    PTAccesorios: '',
+    PTOtros: '',
 
-  NumeroTintas: InputSelect [] = [
-    {value: '1', viewValue: '1'},
-    {value: '2', viewValue: '2'},
-    {value: '3', viewValue: '3'}
-  ];
+    SumaTotalCostos: '',
+    ValorPorBolsa: '',
+    message: '',
+
+    rutaImagen: '',
+    PreciosVenta: '',
+    ResumenCosto: '',
+  };
 
 
+  //Estado 
+  ImpStatusCot : string = '';
   //#region VariablesIniciales
   blnFuelleOpen = true;
   blnAsas = true;
@@ -131,71 +129,26 @@ export class CotizadorComponent {
   slcNumeroTintas: string = '';
   txtColorTintas: string = '';
 
-
-  //Datos del resultado cotizador-METROS
-  txtHolguraAncho_cm: string = '';
-  txtHolguraAlto_cm: string = '';
-  txtFuelleAlto_cm: string = '';
-  txtFuelleAncho_cm: string = '';
-  txtCorteAlto_cm: string = '';
-  txtCorteAncho_cm: string = '';
-
-  txtMetrosRequeridosHorizontal: number = 0;
-  txtMetrosRequeridosVertical: number = 0;
-
-  txtMetrosSobranteHorizontal: number = 0;
-  txtMetrosSobranteVertical: number = 0;
-
-  //Proceso
-  ObtenerCosto_anchoRollo: string = '';
-  ObtenerCosto_largoRollo: string = '';
-  ObtenerCosto_costo_sinIva_Rollo: string = '';
-  Sobrantes: any = 0.02;
-  ObtenerCosto_Confeccion : string = '';
-  ObtenerCosto_Cogedera : string = '';
-  ObtenerCosto_Impresion : string = '';
-
   //Ruta de imagen
   RutaImagen: string = 'deafult';
   RutaImagenSobrante: string = 'deafult';
-  blnShowImagenSobrante:boolean = false;
+  blnShowImagenSobrante: boolean = false;
   RutaImagenCorte: string = 'deafult';
-  blnShowImagenCorte:boolean = false;
-
-  //Enviar resultado al usuario
-  strResultadoCorte: number = 0;
-  strResultadoFuelleCompleto: number = 0;
-  strResultadoAsas: number = 0;
-  strResultadoTotal: number = 0;
-
-  strCostoMaterial : number = 0;
-  strCostoConfeccion : number = 0;
-  strCostoImpresion : number = 0;
-  strCostoAccesorio : number = 0;
-  strCostoTransporte : number = 50000;
-  strTOTAL_COSTOS : number = 0;
-  strValor_TOTAL_Bolsa : number = 0;
+  blnShowImagenCorte: boolean = false;
+  blnCotizacionTable: boolean = false;
 
   //Valores mostrar usuario cotización final
-
-  strPrecioVentaConIva : number = 0;
-  strTotalVentaConIva : number = 0;
-  strPrecioVentaSinIva : number = 0;
-  strTotalVentaSinIva : number = 0;
-  strUtilidad : number = 25;
-
-
-  //#endregion VariablesIniciales
-  // dataSource = [
-  //   { description: 'Precio Venta (sin IVA)',  unitPrice: 15001, totalPrice: 2850190 },
-  //   { description: 'Precio Venta (IVA-19%)',  unitPrice: 2850, totalPrice: 541536 }
-  // ];
+  strUtilidad: number = 25;
 
   dataSource = [{}];
 
-  displayedColumns = ['description',  'unitPrice', 'totalPrice'];
+  displayedColumns = ['description', 'unitPrice', 'totalPrice'];
 
-  constructor(private cotizadorService: CotizadorService) { }
+  constructor(private cotizadorService: CotizadorService) {
+    this.AllMateriales();
+    this.AllConfeciones();
+    this.AllImpresion();
+  }
 
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
@@ -213,12 +166,6 @@ export class CotizadorComponent {
   ngOnInit() {
   }
 
-  
-  ParserToNumber(valor1: String) {
-    let numeroFormateado = Number(valor1).toLocaleString();
-    return numeroFormateado;
-  }
-  
   validateInput() {
 
     let blnValidate = true;
@@ -283,234 +230,166 @@ export class CotizadorComponent {
     }
   }
 
-  ObtenerCostoMaterial(strNameMaterial: string): Promise<any> {
-    let objNameMaterial = { nombreMaterial: strNameMaterial };
+  async CalcularCorteBackend() {
 
-    return from(this.cotizadorService.getMaterialesById(objNameMaterial)).pipe(
-      switchMap(res => {
-        this.ObtenerCosto_anchoRollo = res.ancho_m;
-        this.ObtenerCosto_largoRollo = res.largo_m;
-        this.ObtenerCosto_costo_sinIva_Rollo = res.costo_sinIva_Rollo;
-        return of(res);
-      })
-    ).toPromise();
-  }
+    const datosCotizacion = {
+      TipoCogedera: this.slcTipoCogedera,
+      TipoBolsa: this.slcTipoBolsa,
+      UnidadesRequeridas: this.txtUnidadesRequeridas,
+      Ancho: this.txtAncho_cm,
+      Alto: this.txtAlto_cm,
+      Fuelle: this.txtFuelle_cm,
+      Asas: this.txtLargoAsas_cm,
+      Material: this.slcMaterial,
+      Color: this.txtColor,
+      Estampado: this.slcEstampado,
+      Caras: this.slcCaras,
+      NumeroTintas: this.slcNumeroTintas,
+      ColorTintas: this.txtColorTintas
+    };
+    try {
+      const respuesta = await this.cotizadorService.postCrearCotizacion(datosCotizacion).toPromise();
+      console.log("respuesta cotizador", respuesta);
+      if (respuesta.resp) {
+        this.blnCotizacionTable = true;
 
-  ObtenerCostoConfeccion(strNameConfeccion: string): Promise<any> {
-    let objNameConfeccion = { nombreConfeccion: strNameConfeccion };
 
-    return from(this.cotizadorService.getConfecionById(objNameConfeccion)).pipe(
-      switchMap(res => {
-        this.ObtenerCosto_Confeccion = res.costoConfeccion;
-        return of(res);
-      })
-    ).toPromise();
-  }
+        this.respuestaCotizacion.PVSinIvaUnitario = respuesta.PreciosVenta.PVSinIvaUnitario;
+        this.respuestaCotizacion.PVSinIvaTotal = respuesta.PreciosVenta.PVSinIvaTotal;
+        this.respuestaCotizacion.PVConIvaUnitario = respuesta.PreciosVenta.PVConIvaUnitario;
+        this.respuestaCotizacion.PVConIvaTotal = respuesta.PreciosVenta.PVConIvaTotal;
+        this.respuestaCotizacion.IVA19Unitario = respuesta.PreciosVenta.IVA19Unitario;
+        this.respuestaCotizacion.IVA19Total = respuesta.PreciosVenta.IVA19Total;
 
-  ObtenerCostoImpresion(strNameImpresion: string): Promise<any> {
-    let objNameImpresion = { nombreImpresion: strNameImpresion };
+        this.respuestaCotizacion.PTMaterial = respuesta.ResumenCosto.PTMaterial;
+        this.respuestaCotizacion.PTConfeccion = respuesta.ResumenCosto.PTConfeccion;
+        this.respuestaCotizacion.PTCorte = respuesta.ResumenCosto.PTCorte;
+        this.respuestaCotizacion.PTImpresion = respuesta.ResumenCosto.PTImpresion;
+        this.respuestaCotizacion.PTAccesorios = respuesta.ResumenCosto.PTAccesorios;
+        this.respuestaCotizacion.PTOtros = respuesta.ResumenCosto.PTOtros;
 
-    return from(this.cotizadorService.getImpresionesById(objNameImpresion)).pipe(
-      switchMap(res => {
-        this.ObtenerCosto_Impresion = res.costoImpresion;
-        return of(res);
-      })
-    ).toPromise();
-  }
+        this.respuestaCotizacion.SumaTotalCostos = respuesta.ResumenCosto.SumaTotalCostos;
+        this.respuestaCotizacion.ValorPorBolsa = respuesta.ResumenCosto.ValorPorBolsa;
+        this.respuestaCotizacion.message = respuesta.message;
 
-  ObtenerCostoCogedera(strNameCogedera: string): Promise<any> {
-    let objNameCogedera = { nombreCogedera: strNameCogedera };
+        this.respuestaCotizacion.rutaImagen = respuesta.rutaImagen;
+        this.respuestaCotizacion.PreciosVenta = respuesta.PreciosVenta;
+        this.respuestaCotizacion.ResumenCosto = respuesta.ResumenCosto;
 
-    return from(this.cotizadorService.getCogederaById(objNameCogedera)).pipe(
-      switchMap(res => {
-        this.ObtenerCosto_Cogedera = res.costoCogedera;
-        return of(res);
-      })
-    ).toPromise();
-  }
+        const dataSource = [
+          { description: "Precio Venta (sin IVA)", unitPrice: respuesta.PreciosVenta.PVSinIvaUnitario, totalPrice: respuesta.PreciosVenta.PVSinIvaTotal },
+          { description: "Precio Venta (IVA-19%)", unitPrice: respuesta.PreciosVenta.PVConIvaUnitario, totalPrice: respuesta.PreciosVenta.PVConIvaTotal }
+        ];
 
-  async CalcularCorte() {
+        this.dataSource = dataSource;
 
-    if (this.validateInput()) {
 
-      debugger;
-
-      await this.ObtenerCostoMaterial(this.slcMaterial);
-
-      //Holgura
-      this.txtHolguraAncho_cm = '2';
-      var strTipoCogedera =  this.slcTipoCogedera;
-      let Holgura = this.slcTipoCogedera = 'Troquel' ? '8' : '5';
-      this.txtHolguraAlto_cm = Holgura;
-
-      //Fuelle
-      this.txtFuelleAncho_cm = '0'
-
-      if (this.slcTipoBolsa == 'Plana') {
-        this.txtFuelleAlto_cm = '0'
       }
       else {
-        this.txtFuelleAlto_cm = this.txtFuelle_cm;
+
       }
 
-      //Corte
-      this.txtCorteAncho_cm = (Number(this.txtAncho_cm) + 2 + 0).toString();
-      this.txtCorteAlto_cm = (Number(this.txtAlto_cm) * 2 + Number(Holgura) + Number(this.txtFuelleAlto_cm)).toString();
-
-      //Corte Horizontal
-      let CorteHorizontalxRollo = Math.floor(Number(this.ObtenerCosto_anchoRollo) / Number(this.txtCorteAlto_cm));
-      let CorteHorizontalUsoMaterial = Number(CorteHorizontalxRollo) * Number(this.txtCorteAlto_cm);
-      let CorteHorizontalSobrante = Number(this.ObtenerCosto_anchoRollo) - Number(CorteHorizontalUsoMaterial);
-      let calculoTotalUnidades = parseFloat(this.txtUnidadesRequeridas) + Math.floor(parseFloat(this.txtUnidadesRequeridas) * parseFloat(this.Sobrantes));
-      let calculoTotalUnidadesConDecimales = parseFloat(this.txtUnidadesRequeridas) + parseFloat(this.txtUnidadesRequeridas) * parseFloat(this.Sobrantes);
-      let CorteHorizontalCortesRequeridos = Math.ceil(calculoTotalUnidadesConDecimales / Number(CorteHorizontalxRollo));
-      const resultMetrosRequeridosCorteHorizontal = Math.ceil((CorteHorizontalCortesRequeridos * Number(this.txtCorteAncho_cm)) / 100)
-      this.txtMetrosRequeridosHorizontal = resultMetrosRequeridosCorteHorizontal;
-
-      //Corte Vertical
-      let CorteVerticalxRollo = Math.floor(Number(this.ObtenerCosto_anchoRollo) / Number(this.txtCorteAncho_cm));
-      let CorteVerticalUsoMaterial = Number(CorteVerticalxRollo) * Number(this.txtCorteAncho_cm);
-      let CorteVerticalSobrante = Number(this.ObtenerCosto_anchoRollo) - Number(CorteVerticalUsoMaterial);
-      let CorteVerticalCortesRequeridos = Math.ceil(calculoTotalUnidadesConDecimales / Number(CorteVerticalxRollo));
-      const resultMetrosRequeridosCorteVertical = Math.ceil((CorteVerticalCortesRequeridos * Number(this.txtCorteAlto_cm)) / 100)
-      this.txtMetrosRequeridosVertical = resultMetrosRequeridosCorteVertical;
-
-      if(resultMetrosRequeridosCorteHorizontal<resultMetrosRequeridosCorteVertical){
-        this.strResultadoCorte = resultMetrosRequeridosCorteHorizontal;
-        this.RutaImagenCorte = "rolloHorizontal"
-        this.blnShowImagenCorte = true;
-      }
-      else{
-        this.strResultadoCorte = resultMetrosRequeridosCorteVertical;
-        this.RutaImagenCorte = "rolloVertical"
-        this.blnShowImagenCorte = true;
-      }
-
-      if (this.slcTipoBolsa == 'Fuelle completo') {
-        const intSobranteHorizontal = this.CalcularSobranteFuelleComleto(this.ObtenerCosto_anchoRollo, this.txtFuelleAlto_cm, this.txtAlto_cm, CorteHorizontalSobrante, resultMetrosRequeridosCorteHorizontal, calculoTotalUnidadesConDecimales)
-        const intSobranteVertical = this.CalcularSobranteFuelleComleto(this.ObtenerCosto_anchoRollo, this.txtFuelleAlto_cm, this.txtAlto_cm, CorteVerticalSobrante, resultMetrosRequeridosCorteVertical, calculoTotalUnidadesConDecimales, true)
-        
-        if(intSobranteHorizontal < intSobranteVertical){
-          if(intSobranteHorizontal==0){
-            this.strResultadoFuelleCompleto = intSobranteVertical;
-            this.RutaImagenSobrante = "rolloVertical"
-            this.blnShowImagenSobrante = true;
-          }
-          else{
-            this.strResultadoFuelleCompleto = intSobranteHorizontal;
-            this.RutaImagenSobrante = "rolloHorizontal"
-            this.blnShowImagenSobrante = true;
-          }
-        }
-        else{
-          this.strResultadoFuelleCompleto = intSobranteVertical;
-          this.RutaImagenSobrante = "rolloVertical"
-          this.blnShowImagenSobrante = true;
-        }
-
-        this.txtMetrosSobranteHorizontal = intSobranteHorizontal;
-        this.txtMetrosSobranteVertical = intSobranteVertical;
-
-        this.strResultadoTotal = this.strResultadoCorte + this.strResultadoFuelleCompleto + this.strResultadoAsas 
-
-
-        // Costos.
-
-        //Costos Material
-        const intRollosRequeridos = Number((Number(this.strResultadoTotal)/Number(this.ObtenerCosto_largoRollo)).toFixed(1));
-        const intSubTotal = intRollosRequeridos*Number(this.ObtenerCosto_costo_sinIva_Rollo);
-        const iva = intSubTotal*0.19;
-
-        this.strCostoMaterial = intSubTotal+iva+this.strCostoTransporte;
-
-        //Costos Confección
-
-        await this.ObtenerCostoConfeccion(this.slcTipoBolsa);
-        await this.ObtenerCostoCogedera(strTipoCogedera);
-        await this.ObtenerCostoImpresion(this.slcEstampado)
-
-        const intSubTotalConfeccion = calculoTotalUnidadesConDecimales*Number(this.ObtenerCosto_Confeccion); 
-        const intCortesVLr_rolloConfeccion = (intRollosRequeridos*50000);
-        const intCogederaConfeccion = (Number(this.txtUnidadesRequeridas)*Number(this.ObtenerCosto_Cogedera))*Number(this.ObtenerCosto_Cogedera);
-
-        // this.strCostoConfeccion = intSubTotalConfeccion+intCortesVLr_rolloConfeccion+intCogederaConfeccion;
-        this.strCostoConfeccion = intSubTotalConfeccion;
-
-        //Costos Impresión
-        const intTamaño = Number(this.txtAncho_cm)*Number(this.txtAlto_cm);
-        const intTotalImpresion = Number(this.txtUnidadesRequeridas)*Number(this.ObtenerCosto_Impresion);
-
-      
-        this.strCostoImpresion = intTotalImpresion;
-
-
-        this.strTOTAL_COSTOS = this.strCostoMaterial+this.strCostoConfeccion+this.strCostoImpresion+intCortesVLr_rolloConfeccion;
-
-        this.strValor_TOTAL_Bolsa = Math.ceil(this.strTOTAL_COSTOS/Number(this.txtUnidadesRequeridas));
-
-
-        //Logica Final
-
-        this.CalcularCotizacionFinal();
-        
-      }
+    } catch (error) {
+      console.error(error);
     }
-  };
-
-  CalcularCotizacionFinal(blnInput:boolean=false){
-    const Utilidad = (this.strUtilidad/100)
-    const PrecioVentaSinIva = (this.strValor_TOTAL_Bolsa*Utilidad)+this.strValor_TOTAL_Bolsa;
-    const PrecioVentaConIva = PrecioVentaSinIva+(PrecioVentaSinIva*(19/100));
-    const strPrecioVentaSinIva = PrecioVentaSinIva;
-    const strTotalVentaSinIva = PrecioVentaSinIva*Number(this.txtUnidadesRequeridas);
-    const strPrecioVentaConIva = PrecioVentaConIva;
-    const strTotalVentaConIva = PrecioVentaConIva*Number(this.txtUnidadesRequeridas);
-
-    const dataSource = [
-      { description: "Precio Venta (sin IVA)", unitPrice: strPrecioVentaSinIva, totalPrice: strTotalVentaSinIva },
-      { description: "Precio Venta (IVA-19%)", unitPrice: strPrecioVentaConIva, totalPrice: strTotalVentaConIva }
-    ];
-
-    this.dataSource = dataSource;
-    
-    if(blnInput){
-      this.table.renderRows();
-    }
-  }
-
-  //MetrosRequeridosAncho:MRA
-  //Alto Fuelle : AF
-  //Alto Bolsa : AB
-  //Sobrante : S
-  //Metros Requeridos Horizontal:MRH
-  CalcularSobranteFuelleComleto(strMRA: string, strAF: string, strAB: string, strS: number, strMRH: number, intTotalUnidades: number, isVertical: boolean = false) {
-
-    let sobranteV = Math.floor((Number(strS) / Number(strAF))) * Math.floor((Number(strMRH) * 100 / Number(strAB)));
-    let sobranteH = Math.floor((Number(strS) / Number(strAB))) * Math.floor((Number(strMRH) * 100 / Number(strAF)));
-
-    let UnidadesRequeridas = (intTotalUnidades * 2) - Math.max(sobranteV, sobranteH);
-    if (UnidadesRequeridas < 0) {
-      UnidadesRequeridas = 0;
-    }
-
-    let CortesxAR = Math.floor((Number(strMRA) / Number(strAB)));
-    let UsoMaterial = CortesxAR * Number(strAB)
-    let Desperdicio = Number(strMRA) - UsoMaterial
-    let CortesRequeridos = Math.ceil(UnidadesRequeridas / CortesxAR)
-    let MetrosRequeridos = Math.ceil((CortesRequeridos * Number(strAF)) / 100)
-
-    if (isVertical) {
-      CortesxAR = Math.floor((Number(strMRA) / Number(strAF)));
-      UsoMaterial = CortesxAR * Number(strAF)
-      Desperdicio = Number(strMRA) - UsoMaterial
-      CortesRequeridos = Math.ceil(UnidadesRequeridas / CortesxAR)
-      MetrosRequeridos = Math.ceil((CortesRequeridos * Number(strAB)) / 100)
-    }
-   
-    return MetrosRequeridos;
   }
 
   CambiarImagen(strMaterial: string) {
     this.RutaImagen = strMaterial;
   }
+
+  CambiarUtilidad(strUtilidad: string) {
+    return null;
+  }
+
+  AllMateriales() {
+    const AllMateriales = this.cotizadorService.getMateriales().toPromise();
+
+    AllMateriales.then((materiales) => {
+
+      materiales.forEach((element: any) => {
+        this.TipoMaterial.push({ value: element._id, viewValue: element.nombreMaterial });
+      });
+
+    }).catch((error) => {
+      console.error(error);
+    });
+
+  }
+  AllConfeciones() {
+
+    const AllConfecciones = this.cotizadorService.getConfecciones().toPromise();
+
+    AllConfecciones.then((confecciones) => {
+   
+      confecciones.forEach((element: any) => {
+        this.TipoBolsa.push({ value: element._id, viewValue: element.nombreConfeccion })
+      });
+    });
+
+  }
+
+  AllCogedera() {
+
+
+
+  }
+
+  AllImpresion() {
+
+    const AllImpresiones = this.cotizadorService.getImpresiones().toPromise();
+    AllImpresiones.then((impresiones) => {
+      impresiones.forEach((element: any) => {
+        this.TipoEstampado.push({ value: element._id, viewValue: element.nombreImpresion })
+      });
+    });
+  }
+
+
+  async GuardarCotizacionBackend() {
+
+    const datosCotizacion = {
+      NombreEmpresa: this.txtNombreEmpresa,
+      NombreContacto: this.txtNombreContacto,
+      Identificacion: this.txtNit,
+      TelContacto: this.txtTel_Contacto,
+      Email: this.txtEmail,
+      FechaEntrega: this.txtFechaEntrega,
+      Ciudad: this.txtCiudad,
+      DireccionEntrega: this.txtDireccionDeEntrega,
+      TipoCogedera: this.slcTipoCogedera,
+      TipoBolsa: this.slcTipoBolsa,
+      UnidadesRequeridas: this.txtUnidadesRequeridas,
+      Ancho_cm: this.txtAncho_cm,
+      Alto_cm: this.txtAlto_cm,
+      Fuelle_cm: this.txtFuelle_cm,
+      Asas_cm: this.txtLargoAsas_cm,
+      Material: this.slcMaterial,
+      Color: this.txtColor,
+      Estampado: this.slcEstampado,
+      Caras: this.slcCaras,
+      NumeroTintas: this.slcNumeroTintas,
+      ColorTintas: this.txtColorTintas,
+      ValorBolsa:  this.respuestaCotizacion.ValorPorBolsa,
+      Utilidad: this.strUtilidad,
+      PVSinIvaUnitario: this.respuestaCotizacion.PVSinIvaUnitario,
+      PVSinIvaTotal: this.respuestaCotizacion.PVSinIvaTotal,
+      PVConIvaUnitario: this.respuestaCotizacion.PVConIvaUnitario,
+      PVConIvaTotal:  this.respuestaCotizacion.PVConIvaTotal ,
+      NombreUsuario:localStorage.getItem('user'),
+      _IdUsuario:localStorage.getItem('_IdUser'),
+      _EstadoCotizacion:'borrador',
+      CheckCliente:null,
+      CheckDineroCliente:null
+    };
+
+    try {
+      const respuesta = await this.cotizadorService.postCrearYGuardarCotizacion(datosCotizacion).toPromise();
+      console.log("respuesta cotizador", respuesta);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
 }
