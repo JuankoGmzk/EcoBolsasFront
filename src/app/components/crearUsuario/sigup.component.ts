@@ -8,9 +8,19 @@ import { Router } from '@angular/router'
   styleUrls: ['./sigup.component.css']
 })
 export class SigupComponent {
-
+  generoOptions: string[] = ['Masculino', 'Femenino'];
   user = {
-    email: '',
+    primerNombre : '',
+    segundoNombre : '',
+    primerApellido : '',
+    segundoApellido : '',
+    cedula : '',
+    cargo : '',
+    edad : '',
+    fechaNacimiento : '',
+    esPLanta : '',
+    genero : '',
+    user: '',
     password: ''
   };
 
@@ -21,12 +31,16 @@ export class SigupComponent {
 
 
   signUp() {
+
+    this.user.user = this.user.primerNombre+this.user.primerApellido.substr(0,3);
+    this.user.password = this.user.cedula;
+
     this.authService.signUpUser(this.user)
       .subscribe(
         res => {
-          console.log(res);
+          console.log("creación de usuario y de sesión -> ",res);
           localStorage.setItem('token', res.token);
-          this.router.navigate(['/private']);
+          this.router.navigate(['/lobby']);
         },
         err => console.log(err)
       )

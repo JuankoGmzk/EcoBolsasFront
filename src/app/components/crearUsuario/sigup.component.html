@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-md-12 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                Crear usuario
+            </div>
+            <div class="card-body">
+                <form (submit)="signUp()">
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <span >Primer Nombre</span>
+                            <input type="text" [(ngModel)]="user.primerNombre" name="Primer Nombre" class="form-control"
+                                placeholder="Primer Nombre" required autofocus>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span>Segundo Nombre</span>
+                            <input type="text" [(ngModel)]="user.segundoNombre" name="Segundo Nombre" class="form-control"
+                                placeholder="Segundo Nombre" required autofocus>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span>Primer Apellido</span>
+                            <input type="text" [(ngModel)]="user.primerApellido" name="Primer Apellido" class="form-control"
+                                placeholder="Primer Apellido" required autofocus>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span>Segundo Apellido</span>
+                            <input type="text" [(ngModel)]="user.segundoApellido" name="Segundo Apellido" class="form-control"
+                                placeholder="Segundo Apellido" required autofocus>
+                        </div>
+
+
+                        <div class="form-group col-md-3">
+                            <span>Cédula</span>
+                            <input type="text" [(ngModel)]="user.cedula" name="cedula" class="form-control"
+                                placeholder="Cédula" required autofocus>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span>Edad</span>
+                            <input type="text" [(ngModel)]="user.edad" name="edad" class="form-control"
+                                placeholder="Edad" required autofocus>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <span>Cargo</span>
+                            <input type="text" [(ngModel)]="user.cargo" name="cargo" class="form-control"
+                                placeholder="Cargo" required autofocus>
+                        </div>
+
+
+                        <div class="form-group col-md-3">
+                            <span>Fecha nacimiento</span>
+                            <input type="date" [(ngModel)]="user.fechaNacimiento" name="Fecha nacimiento" class="form-control"
+                                placeholder="Fecha nacimiento" required autofocus>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span>Genero</span>
+                            <select class="form-select form-select-sm" id="genero" name="genero" [(ngModel)]="user.genero">
+                                <option *ngFor="let option of generoOptions" [value]="option">{{ option }}</option>
+                              </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span>¿Es de planta?</span>
+                            <input type="checkbox" [(ngModel)]="user.esPLanta" name="Es de planta" class="m-1 form-check-input"
+                                placeholder="¿Es de planta?" required>
+                        </div>
+                       
+                    </div>
+
+                    <button class="btn btn-primary btn-block">
+                        Crear Usuario
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
