@@ -1,0 +1,83 @@
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    margin: 20px;
+    text-align: center;
+    transition: all 0.25s;
+}
+
+.cardNotHover {
+    border-radius: 8px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    margin: 20px;
+    text-align: center;
+    transition: all 0.25s;
+}
+.card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+.photo-user {
+    width: 100px;
+    /* Ancho deseado */
+    height: 100px;
+    /* Alto deseado */
+    border-radius: 50%;
+    /* Hacer la imagen redonda */
+    overflow: hidden;
+    /* Ocultar cualquier parte de la imagen que se desborde */
+    margin: 0 auto;
+    /* Centrar horizontalmente en su contenedor */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Si deseas agregar un borde a la imagen */
+.photo-user img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ajustar la imagen al círculo sin distorsión */
+    border: 2px solid #fff;
+    /* Cambiar el color y el grosor del borde según tus preferencias */
+}
+
+
+
+/* CSS personalizado */
+.custom-list {
+    padding: 0;
+    border-top: 1px solid #ccc;
+    /* Línea superior */
+}
+
+.custom-list-item {
+    /* Línea inferior */
+    transition: background-color 0.2s;
+    /* Transición de color de fondo al pasar el cursor */
+}
+
+.custom-list-item:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+    /* Color de fondo al pasar el cursor */
+}
+
+/* Estilos adicionales según tus preferencias */
+.custom-list-item a {
+    text-decoration: none;
+    /* Eliminar subrayado de los enlaces */
+    color: #333;
+    /* Color de texto normal */
+    
+}
+
+.custom-list-item a:hover {
+    color: #007bff;
+    /* Cambiar el color de texto al pasar el cursor */
+}
