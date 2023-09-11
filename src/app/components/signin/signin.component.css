@@ -1,0 +1,15 @@
+.card-header{
+    text-align: center;
+}
+
+.image-company-logo{
+    border-radius: 15%;
+    width: 60%;
+    height: 100%;
+    text-align: center;
+}
+
+.image-company{
+    text-align: center;
+    margin-top: 20px;
+}
