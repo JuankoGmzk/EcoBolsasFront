@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-6" *ngFor="let task of OtActivas">
+        <div class="card">
+            <div class="card-header">
+                <h5>Título de la tarjeta</h5>
+                <!-- <button class="card-btn m-2" (click)="EliminarTarea(task._id)">Eliminar</button> -->
+                <!-- <button class="card-btn m-2" (click)="EditarTarea(task)">Editar</button> -->
+              </div>
+            <div class="card-body">
+                <h3>{{task.NombreEmpresa}}</h3>
+                <p>{{task.NombreContacto}}</p>
+                <p>{{task.Identificacion}}</p>
+                <p>{{task.TelContacto}}</p>
+            </div>
+            <div class="card-footer ">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h4>Fecha: {{task.FechaEntrega | date: 'shortDate'}}</h4>
+                    </div>
+                    <div class="col-md-5">
+                        <h4>Cantidad {{task.UnidadesRequeridas}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

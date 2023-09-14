@@ -1,0 +1,49 @@
+<!-- mi-perfil.component.html -->
+
+<div class="container">
+    <h2>Mi Perfil</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="../../../assets/img/{{pathImageGener}}.png" alt="Mi Foto de Perfil" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label for="primerNombre">Primer Nombre:</label>
+                    <input type="text" id="primerNombre" class="form-control" [(ngModel)]="primerNombre">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="segundoNombre">Segundo Nombre:</label>
+                    <input type="text" id="segundoNombre" class="form-control" [(ngModel)]="segundoNombre">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="primerApellido">Primer Apellido:</label>
+                    <input type="text" id="primerApellido" class="form-control" [(ngModel)]="primerApellido">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="primerApellido">Segundo Apellido:</label>
+                    <input type="text" id="primerApellido" class="form-control" [(ngModel)]="segundoApellido">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="cedula">Cédula:</label>
+                    <input type="text" id="cedula" class="form-control" [(ngModel)]="cedula">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="Genero">Genero:</label>
+                    <input type="text" id="Genero" class="form-control" [(ngModel)]="genero">
+                </div>
+                <div class="form-group col-md-8">
+                    <label for="Cargo">Cargo:</label>
+                    <input type="text" id="Cargo" class="form-control" [(ngModel)]="cargo">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Cargo">Cambiar contraseña:</label>
+                    <button (click)="CambiarContrasena()" class="btn btn-success bi bi-lock">Cambiar contraseña</button>
+                </div>
+            </div>
+        </div>
+        <!-- Otros campos aquí -->
+        <button class="btn btn-primary" (click)="EditarPerfil()">Guardar Perfil</button>
+    </div>
+</div>
