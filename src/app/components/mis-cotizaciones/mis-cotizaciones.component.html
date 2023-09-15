@@ -1,0 +1,52 @@
+<p>Mis cotizaciones!</p>
+
+
+<!-- cotizaciones.component.html -->
+<div class="mat-elevation-z2">
+    <table mat-table [dataSource]="cotizaciones">
+        <!-- Columna para el nombre del NombreEmpresa -->
+        <ng-container matColumnDef="NombreEmpresa">
+            <th mat-header-cell *matHeaderCellDef> Nombre Empresa </th>
+            <td mat-cell *matCellDef="let cotizacion"> {{ cotizacion.NombreEmpresa }} </td>
+        </ng-container>
+
+        <!-- Columna para el NombreContacto -->
+        <ng-container matColumnDef="NombreContacto">
+            <th mat-header-cell *matHeaderCellDef> Nombre Contacto </th>
+            <td mat-cell *matCellDef="let cotizacion"> {{ cotizacion.NombreContacto }} </td>
+        </ng-container>
+
+        <!-- Columna para el Identificacion -->
+        <ng-container matColumnDef="Identificacion">
+            <th mat-header-cell *matHeaderCellDef> Identificacion </th>
+            <td mat-cell *matCellDef="let cotizacion"> {{ cotizacion.Identificacion }} </td>
+        </ng-container>
+
+        <!-- Columna para el ValorBolsa -->
+        <ng-container matColumnDef="ValorBolsa">
+            <th mat-header-cell *matHeaderCellDef> Valor Bolsa </th>
+            <td mat-cell *matCellDef="let cotizacion"> {{ cotizacion.ValorBolsa | currency }} </td>
+        </ng-container>
+
+        <!-- Columna para el PVConIvaTotal -->
+        <ng-container matColumnDef="PVConIvaTotal">
+            <th mat-header-cell *matHeaderCellDef> PV Con Iva Total </th>
+            <td mat-cell *matCellDef="let cotizacion"> {{ cotizacion.PVConIvaTotal | currency }} </td>
+        </ng-container>
+
+          <!-- Columna para el PVConIvaTotal -->
+          <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
+            <td mat-cell *matCellDef="let cotizacion" class="text-center"> 
+                <button type="button" class="btn btn-warning mr-2" (click)="EditarCotizacion(cotizacion._id);">Editar</button> 
+                <button type="button" class="btn btn-info" (click)="VerCotizacion(cotizacion);">Ver</button>  
+            </td>
+       
+        </ng-container>
+
+        <!-- Otras columnas pueden agregarse de manera similar -->
+
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+    </table>
+</div>
