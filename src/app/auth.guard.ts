@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from './services/auth.service';
 
 @Injectable({
@@ -12,13 +12,24 @@ export class AuthGuard implements CanActivate {
     private router: Router
   ) { }
 
-  canActivate(): boolean {
-    if (this.authService.loggedIn()) {
-      return true;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (!this.authService.loggedIn()) {
+      this.router.navigate(['/signin']);
+      return false;
     }
 
-    this.router.navigate(['/signin']);
-    return false;
+    // Verificar si se requieren permisos y, en ese caso, si el usuario los tiene
+    
+    if (route.data && route.data['requiredPermission']) {
+      const requiredPermission = route.data['requiredPermission'] as string;
+
+      if (!this.authService.hasPermission(requiredPermission)) {
+        this.router.navigate(['/lobby']); // Redirigir a una página de acceso no autorizado si no tiene los permisos necesarios
+        return false;
+      }
+    }
+
+    return true;
   }
-  
+
 }
