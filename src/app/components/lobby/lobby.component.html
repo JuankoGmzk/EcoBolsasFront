@@ -17,24 +17,24 @@
       <p>Actividades</p>
       <ul class="list-group custom-list">
         <li class="list-group-item custom-list-item">
-          <a routerLink="/cotizador">Cotizar</a>
+          <a routerLink="/cotizador/0">Cotizar</a>
         </li>
         <li class="list-group-item custom-list-item" (click)="mostrarSubopciones = !mostrarSubopciones">
           <a>Cotizaciones</a>
           <ul *ngIf="mostrarSubopciones">
             <li class="list-group-item custom-list-item">
-              <a routerLink="/HistorialCotizador">Cotizaciones realizadas</a>
+              <a routerLink="/misCotizaciones">Cotizaciones realizadas</a>
             </li>
             <li class="list-group-item custom-list-item">
-              <a routerLink="/HistoricoCotizaciones">Histórico de cotizaciones</a>
+              <a routerLink="/misOT">Histórico de mis OT</a>
             </li>
           </ul>
         </li>
         <li class="list-group-item custom-list-item">
-          <a routerLink="/CambiarPrecios">Cambiar precios</a>
+          <a routerLink="/materiales">Cambiar precios</a>
         </li>
         <li class="list-group-item custom-list-item">
-          <a routerLink="/usuarios">Usuarios</a>
+          <a routerLink="/users">Usuarios</a>
         </li>
       </ul>
     </div>
