@@ -58,6 +58,12 @@
                               </select>
                         </div>
                         <div class="form-group col-md-3">
+                            <span>Rol</span>
+                            <select class="form-select form-select-sm" id="rol" name="rol" [(ngModel)]="user.rol">
+                                <option *ngFor="let option of rolesOptions" [value]="option">{{ option }}</option>
+                              </select>
+                        </div>
+                        <div class="form-group col-md-3">
                             <span>¿Es de planta?</span>
                             <input type="checkbox" [(ngModel)]="user.esPLanta" name="Es de planta" class="m-1 form-check-input"
                                 placeholder="¿Es de planta?" required>

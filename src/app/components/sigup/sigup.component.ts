@@ -9,6 +9,7 @@ import { Router } from '@angular/router'
 })
 export class SigupComponent {
   generoOptions: string[] = ['Masculino', 'Femenino'];
+  rolesOptions:string[] = ['Administrador', 'Colaborador', 'JefeVentas', 'JefeProduccion', 'JefeEstampado'];
   user = {
     primerNombre : '',
     segundoNombre : '',
@@ -16,6 +17,7 @@ export class SigupComponent {
     segundoApellido : '',
     cedula : '',
     cargo : '',
+    rol:'',
     edad : '',
     fechaNacimiento : '',
     esPLanta : '',
@@ -32,8 +34,11 @@ export class SigupComponent {
 
   signUp() {
 
+
     this.user.user = this.user.primerNombre+this.user.primerApellido.substr(0,3);
     this.user.password = this.user.cedula;
+
+    console.log(this.user,"<-- user")
 
     this.authService.signUpUser(this.user)
       .subscribe(
