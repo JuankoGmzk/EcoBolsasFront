@@ -36,6 +36,7 @@ export class SigninComponent implements OnInit {
           localStorage.setItem('edad', res.dataUser.edad);
           localStorage.setItem('cedula', res.dataUser.cedula);
           localStorage.setItem('cargo', res.dataUser.cargo);
+          localStorage.setItem('rol',res.dataUser.rol)
           localStorage.setItem('user', res.dataUser.user);
           localStorage.setItem('_IdUser',res.dataUser.idUser)
 
