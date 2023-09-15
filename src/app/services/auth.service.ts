@@ -31,4 +31,12 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+
+  GetAllUsers(){
+    return this.http.get<any>(this.URL+'/AllUsers')
+  }
+
+  GetMyInfo(user:object){
+    return this.http.post<object>(this.URL+'/MyInfo',user)
+  }
 }
