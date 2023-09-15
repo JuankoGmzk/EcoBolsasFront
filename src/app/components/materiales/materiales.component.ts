@@ -33,7 +33,9 @@ export class MaterialesComponent {
     ancho_m: '',
     grm_m2: '',
     costo_sinIva_Rollo: '',
-    porcentajeValor: ''
+    porcentajeValor: '',
+    resultMtrXRollo:'',
+    resultMtrXRolloDetal:''
   }];
 
   impresiones = [{
@@ -61,7 +63,6 @@ export class MaterialesComponent {
   panelOpenImpresiones = false;
   panelOpenConfecciones = false;
   panelOpenCordones = false;
-
 
   
   constructor(private cotizadorService: CotizadorService,private modalService: BsModalService) { }
@@ -112,10 +113,6 @@ export class MaterialesComponent {
     this.modalRef?.hide();
   }
  
-  // openModal(template: TemplateRef<any>) {
-  //   this.modalRef = this.modalService.show(template, this.config);
-  // }
-
   ngOnInit() {
     this.ObtenerMateriales();
     this.ObtenerImpresiones();
@@ -123,66 +120,24 @@ export class MaterialesComponent {
     this.ObtenerCordones();
   }
 
-  ObtenerMateriales() {
-    this.cotizadorService.getMateriales().subscribe(
-      res => {
-        this.materiales = res;
-      },
-      err => {
-        console.log(err)
-      }
-    );
-
-    
+  async ObtenerMateriales() {
+    const Materiales = await this.cotizadorService.getMateriales().toPromise();
+    this.materiales = Materiales;
   }
 
-  ObtenerImpresiones() {
-    this.cotizadorService.getImpresiones().subscribe(
-      res => {
-        this.impresiones = res;
-      },
-      err => {
-        console.log(err)
-      }
-    );
+  async ObtenerImpresiones() {
+    const Impresiones = await this.cotizadorService.getImpresiones().toPromise();
+    this.impresiones = Impresiones;
   }
 
-  ObtenerConfecciones() {
-    this.cotizadorService.getConfecciones().subscribe(
-      res => {
-        this.confecciones = res;
-      },
-      err => {
-        console.log(err)
-      }
-    );
+  async ObtenerConfecciones() {
+    const Confecciones = await this.cotizadorService.getConfecciones().toPromise();
+    this.confecciones = Confecciones;
   }
 
-  ObtenerCordones() {
-    this.cotizadorService.getCordones().subscribe(
-      res => {
-        this.cordones = res;
-      },
-      err => {
-        console.log(err)
-      }
-    );
-  }
-
-  ParserToNumber(valor1: String) {
-    let numeroFormateado = Number(valor1).toLocaleString();
-    return numeroFormateado;
-  }
-
-  ValorMetroXrollo(valor: String, metros: String) {
-    let opeacion = Number(valor) / Number(metros);
-    return Math.floor(opeacion);
-  }
-
-  ValorMetroXdetal(valor: number, multiplicacion: string, index: number) {
-    let intMultiplicacion: number = Number(multiplicacion.toLocaleString());
-    let numeroEntero: number = valor * intMultiplicacion;
-    return numeroEntero.toLocaleString();
+  async ObtenerCordones() {
+    const Cordones = await this.cotizadorService.getCordones().toPromise();
+    this.cordones = Cordones;
   }
 
   EditarMaterial(material:object, id:string){

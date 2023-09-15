@@ -9,7 +9,7 @@
                 Tabla de materiales...
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <mat-card class="card">
+        <mat-card class="card"> 
             <mat-card-content>
                 <div class="row">
                     <div class="col-md-12">
@@ -62,16 +62,16 @@
                                     </td>
                                     <td class="table-info">
                                         <span
-                                            *ngIf="editingItem !== material._id">{{ParserToNumber(material.costo_sinIva_Rollo)}}</span>
+                                            *ngIf="editingItem !== material._id">{{material.costo_sinIva_Rollo | currency}}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
                                             *ngIf="editingItem === material._id"
                                             [(ngModel)]="material.costo_sinIva_Rollo" />
                                     </td>
                                     <td>
-                                        {{ValorMetroXrollo(material.costo_sinIva_Rollo,material.largo_m)}}
+                                        {{material.resultMtrXRollo | currency}}
                                     </td>
                                     <td>
-                                        {{ValorMetroXdetal(ValorMetroXrollo(material.costo_sinIva_Rollo,material.largo_m),material.porcentajeValor,i)}}
+                                        {{material.resultMtrXRolloDetal | currency }}
                                     </td>
                                     <td>
                                         <div class="row">
@@ -130,7 +130,7 @@
 
                                     <td class="table-info">
                                         <span
-                                            *ngIf="editingItem !== impresion._id">{{ParserToNumber(impresion.costoImpresion)}}</span>
+                                            *ngIf="editingItem !== impresion._id">{{impresion.costoImpresion}}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
                                             *ngIf="editingItem === impresion._id"
                                             [(ngModel)]="impresion.costoImpresion" />
@@ -199,7 +199,7 @@
 
                                     <td class="table-info">
                                         <span
-                                            *ngIf="editingItem !== confeccion._id">{{ParserToNumber(confeccion.costoConfeccion)}}</span>
+                                            *ngIf="editingItem !== confeccion._id">{{confeccion.costoConfeccion}}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
                                             *ngIf="editingItem === confeccion._id"
                                             [(ngModel)]="confeccion.costoConfeccion" />
@@ -272,13 +272,13 @@
                                     </th>
                                     <td class="table-info">
                                         <span
-                                            *ngIf="editingItem !== cordon._id">{{ParserToNumber(cordon.valorRollo)}}</span>
+                                            *ngIf="editingItem !== cordon._id">{{cordon.valorRollo}}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
                                             *ngIf="editingItem === cordon._id" [(ngModel)]="cordon.valorRollo" />
                                     </td>
                                     <td class="table-info">
                                         <span
-                                            *ngIf="editingItem !== cordon._id">{{ParserToNumber(cordon.valorMetro)}}</span>
+                                            *ngIf="editingItem !== cordon._id">{{cordon.valorMetro}}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
                                             *ngIf="editingItem === cordon._id" [(ngModel)]="cordon.valorMetro" />
                                     </td>
@@ -308,13 +308,6 @@
     </mat-expansion-panel>
 </mat-accordion>
 
-
-
-<!-- <button type="button" class="btn btn-primary" (click)="openModal(template)">Open modal</button>
-<br>
-<br>
-<button type="button" class="btn btn-primary btn-sm" (click)="config.animated = !config.animated">{{config.animated ?
-    'Disable' : 'Enable'}} animation</button> -->
 
 <ng-template #template>
     <div class="modal-header">
