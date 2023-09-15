@@ -16,25 +16,28 @@
     <div class="cardNotHover p-3">
       <p>Actividades</p>
       <ul class="list-group custom-list">
-        <li class="list-group-item custom-list-item">
+        <li class="list-group-item custom-list-item" *ngIf="blpermisosCotizar">
           <a routerLink="/cotizador/0">Cotizar</a>
         </li>
         <li class="list-group-item custom-list-item" (click)="mostrarSubopciones = !mostrarSubopciones">
           <a>Cotizaciones</a>
           <ul *ngIf="mostrarSubopciones">
-            <li class="list-group-item custom-list-item">
+            <li class="list-group-item custom-list-item"  *ngIf="blpermisosCotizacionesRealizadas">
               <a routerLink="/misCotizaciones">Cotizaciones realizadas</a>
             </li>
-            <li class="list-group-item custom-list-item">
+            <li class="list-group-item custom-list-item" *ngIf="blpermisosHistoricoDeMisOT">
               <a routerLink="/misOT">Histórico de mis OT</a>
             </li>
           </ul>
         </li>
-        <li class="list-group-item custom-list-item">
+        <li class="list-group-item custom-list-item" *ngIf="blpermisosCambiarPrecios">
           <a routerLink="/materiales">Cambiar precios</a>
         </li>
-        <li class="list-group-item custom-list-item">
+        <li class="list-group-item custom-list-item" *ngIf="blpermisosUsuarios">
           <a routerLink="/users">Usuarios</a>
+        </li>
+        <li class="list-group-item custom-list-item" *ngIf="blpermisosCrearUsuario">
+          <a routerLink="/signup">Crear usuario</a>
         </li>
       </ul>
     </div>
