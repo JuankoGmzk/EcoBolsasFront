@@ -18,20 +18,20 @@ import { OTActivasComponent } from './components/otactivas/otactivas.component'
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  { path : '', component : LobbyComponent, pathMatch : 'full' },
-  { path : 'tasks', component : TaskComponent },
-  { path : 'private', component : PrivateTaskComponent,canActivate: [AuthGuard]},
-  { path : 'signup', component : SigupComponent},
+  { path : '', component : LobbyComponent, pathMatch : 'full',canActivate: [AuthGuard] },
+  { path : 'tasks', component : TaskComponent,canActivate: [AuthGuard] },
+  { path : 'private', component : PrivateTaskComponent,canActivate: [AuthGuard], data: { requiredPermission: ['Administrador']}},
+  { path : 'signup', component : SigupComponent,canActivate: [AuthGuard], data: { requiredPermission: ['Administrador']}},
   { path : 'signin', component : SigninComponent},
   { path : 'createTask', component: CreateTaskComponent,canActivate: [AuthGuard]},
-  { path : 'cotizador/:id', component: CotizadorComponent},
-  { path : 'materiales', component:MaterialesComponent},
-  { path : 'lobby', component:LobbyComponent},
-  { path : 'misCotizaciones', component:MisCotizacionesComponent},
-  { path : 'misOT', component:MisOTComponent},
-  { path : 'users', component:UsersComponent},
-  { path : 'miPerfil', component:MiPerfilComponent},
-  { path : 'oTActivas', component:OTActivasComponent}
+  { path : 'cotizador/:id', component: CotizadorComponent,canActivate: [AuthGuard]},
+  { path : 'materiales', component:MaterialesComponent,canActivate: [AuthGuard], data: { requiredPermission: ['Administrador']}},
+  { path : 'lobby', component:LobbyComponent,canActivate: [AuthGuard]},
+  { path : 'misCotizaciones', component:MisCotizacionesComponent,canActivate: [AuthGuard]},
+  { path : 'misOT', component:MisOTComponent,canActivate: [AuthGuard]},
+  { path : 'users', component:UsersComponent,canActivate: [AuthGuard], data: { requiredPermission: ['Administrador','Administrador3']}},
+  { path : 'miPerfil', component:MiPerfilComponent,canActivate: [AuthGuard]},
+  { path : 'oTActivas', component:OTActivasComponent,canActivate: [AuthGuard]}
 ];
 
 @NgModule({
