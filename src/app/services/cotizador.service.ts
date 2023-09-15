@@ -61,4 +61,24 @@ export class CotizadorService {
     return this.http.post<any>(this.URL+'/CrearCotizacion', datosCotizador)
   }
 
+  ObtenerDetalleCotizacion(datosCotizador:object){
+    return this.http.post<any>(this.URL+'/DetalleCotizacion', datosCotizador)
+  }
+
+  EditarCotizacion(datosCotizador:object){
+    return this.http.post<any>(this.URL+'/ActualizarMiCotizacion', datosCotizador);
+  }
+
+  ObtenerMisCotizaciones(idCliente:object){
+    return this.http.post<any>(this.URL+'/MisCotizaciones', idCliente);
+  }
+
+  ObtenerOtActivas(){
+    return this.http.get<any>(this.URL+'/ObtenerOtActivas');
+  }
+
+  ActualizarCotizacionGenerarOT(idCotizacion:object){
+    return this.http.post<object>(this.URL+'/GenerarOT', idCotizacion);
+  }
+
 }
