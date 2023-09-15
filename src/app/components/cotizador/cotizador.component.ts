@@ -2,7 +2,16 @@ import { Component, ViewChild } from '@angular/core';
 import { CotizadorService } from "../../services/cotizador.service";
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { MatTable } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { SocketWebService } from '../../services/socket-web.service';
+import * as pdfMake from 'pdfmake/build/pdfmake';
 
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 
 interface InputSelect {
@@ -25,6 +34,7 @@ export class CotizadorComponent {
   @ViewChild(MatTable) table!: MatTable<any>;
 
 
+  cotizacionId: string | undefined;
 
   TipoCogedera: InputSelect[] = [
     { value: 'Asas', viewValue: 'Asas' },
@@ -139,12 +149,26 @@ export class CotizadorComponent {
 
   //Valores mostrar usuario cotización final
   strUtilidad: number = 25;
+  checkCliente:boolean = false;
+  checkDinero:boolean = false;
 
   dataSource = [{}];
 
   displayedColumns = ['description', 'unitPrice', 'totalPrice'];
 
-  constructor(private cotizadorService: CotizadorService) {
+  base64Image1: string | null = null;
+  base64Image2: string | null = null;
+
+  isDisabled : boolean = false;
+  mostrarBotonCotizar : boolean = true;
+  mostrarBotonGuardar : boolean = true;
+  mostrarBotonGenerar_PDF : boolean = false;
+  mostrarBotonEditar : boolean = false;
+  mostrarBotonGenerar_OT : boolean = false;
+  mostrarBotonCheckCliente : boolean = false;
+  mostrarBotonCheckDineroCliente : boolean = false;
+
+  constructor(private socketWebService: SocketWebService, private cotizadorService: CotizadorService, private router: Router,private route: ActivatedRoute,private location: Location,private http: HttpClient) {
     this.AllMateriales();
     this.AllConfeciones();
     this.AllImpresion();
@@ -163,7 +187,24 @@ export class CotizadorComponent {
     return '';
   };
 
-  ngOnInit() {
+  ngOnInit(): void {
+   
+    // Accede al valor de :id desde la ruta y asígnalo a la propiedad cotizacionId
+    this.route.params.subscribe(params => {
+      this.cotizacionId = params['id'];
+
+      if(params['id'] == 0){
+        this.isDisabled = false;
+      }
+      else{
+        this.isDisabled = true;
+        this.blnCotizacionTable = true;
+
+        this.DatosDetalleCotizacion(params['id']);
+       
+      }
+      // Ahora puedes usar this.cotizacionId para cargar los detalles de la cotización con ese ID
+    });
   }
 
   validateInput() {
@@ -349,6 +390,7 @@ export class CotizadorComponent {
   async GuardarCotizacionBackend() {
 
     const datosCotizacion = {
+      _idCotizacion: this.cotizacionId,
       NombreEmpresa: this.txtNombreEmpresa,
       NombreContacto: this.txtNombreContacto,
       Identificacion: this.txtNit,
@@ -379,16 +421,177 @@ export class CotizadorComponent {
       NombreUsuario:localStorage.getItem('user'),
       _IdUsuario:localStorage.getItem('_IdUser'),
       _EstadoCotizacion:'borrador',
-      CheckCliente:null,
-      CheckDineroCliente:null
+      CheckCliente:this.checkCliente,
+      CheckDineroCliente:this.checkDinero
     };
-
+ 
     try {
-      const respuesta = await this.cotizadorService.postCrearYGuardarCotizacion(datosCotizacion).toPromise();
-      console.log("respuesta cotizador", respuesta);
+  
+      if(this.cotizacionId != undefined && this.cotizacionId != null && this.cotizacionId != '0'){
+        
+        const respuesta = await this.cotizadorService.EditarCotizacion(datosCotizacion).toPromise();
+        
+        console.log("respuesta edición",respuesta)
+        
+        window.location.reload();
+      }
+      else{
+        const respuesta = await this.cotizadorService.postCrearYGuardarCotizacion(datosCotizacion).toPromise();
+        console.log("respuesta cotizador", respuesta);
+        if(respuesta.resp){
+  
+          const _idRegistroCotizacion = respuesta.respCotizacion._id;//Verificar
+  
+          this.router.navigate(['/cotizador', _idRegistroCotizacion]);
+  
+        }
+      }
+      
     } catch (error) {
       console.error(error);
     }
+  }
+
+
+  async DatosDetalleCotizacion(id: String) {
+    const idDetalle = { IdSolicitud: id };
+    const detalleCotizacion = await this.cotizadorService.ObtenerDetalleCotizacion(idDetalle).toPromise();
+
+    console.log("detalleCotizacion", detalleCotizacion)
+
+    this.txtNombreEmpresa = detalleCotizacion.NombreEmpresa;
+    this.txtNombreContacto = detalleCotizacion.NombreContacto;
+    this.txtNit = detalleCotizacion.Identificacion;
+    this.txtTel_Contacto = detalleCotizacion.TelContacto;
+    this.txtEmail = detalleCotizacion.Email;
+    this.txtFechaEntrega = detalleCotizacion.FechaEntrega;
+    this.txtCiudad = detalleCotizacion.Ciudad;
+    this.txtDireccionDeEntrega = detalleCotizacion.DireccionEntrega;
+    this.slcTipoCogedera = detalleCotizacion.TipoCogedera;
+    this.slcTipoBolsa = detalleCotizacion.TipoBolsa;
+    this.txtUnidadesRequeridas = detalleCotizacion.UnidadesRequeridas;
+    this.txtAncho_cm = detalleCotizacion.Ancho_cm;
+    this.txtAlto_cm = detalleCotizacion.Alto_cm;
+    this.txtFuelle_cm = detalleCotizacion.Fuelle_cm;
+    this.txtLargoAsas_cm = detalleCotizacion.Asas_cm;
+    this.slcMaterial = detalleCotizacion.Material;
+    this.txtColor = detalleCotizacion.Color;
+    this.slcEstampado = detalleCotizacion.ColorEstampado;
+    this.slcCaras = detalleCotizacion.Caras;
+    this.slcNumeroTintas = detalleCotizacion.NumeroTintas;
+    this.txtColorTintas = detalleCotizacion.ColorTintas;
+    this.respuestaCotizacion.ValorPorBolsa = detalleCotizacion.ValorBolsa;
+    this.strUtilidad = detalleCotizacion.Utilidad;
+    this.respuestaCotizacion.PVSinIvaUnitario = detalleCotizacion.PVSinIvaUnitario;
+    this.respuestaCotizacion.PVSinIvaTotal = detalleCotizacion.PVSinIvaTotal;
+    this.respuestaCotizacion.PVConIvaUnitario = detalleCotizacion.PVConIvaUnitario;
+    this.respuestaCotizacion.PVConIvaTotal = detalleCotizacion.PVConIvaTotal;
+    this.ImpStatusCot = detalleCotizacion._EstadoCotizacion;
+    this.checkCliente = detalleCotizacion.CheckCliente;
+    this.checkDinero = detalleCotizacion.CheckDineroCliente;
+
+    const dataSource = [
+      { description: "Precio Venta (sin IVA)", unitPrice:  detalleCotizacion.PVSinIvaUnitario, totalPrice:  detalleCotizacion.PVSinIvaTotal },
+      { description: "Precio Venta (IVA-19%)", unitPrice: detalleCotizacion.PVConIvaUnitario, totalPrice: detalleCotizacion.PVConIvaTotal}
+    ];
+
+    this.dataSource = dataSource;
+
+    if(detalleCotizacion._EstadoCotizacion == 'borrador'){
+      this.mostrarBotonCotizar= false;
+      this.mostrarBotonGuardar = false;
+      this.mostrarBotonGenerar_PDF = true;
+      this.mostrarBotonEditar = true;
+      this.mostrarBotonCheckCliente = true;
+      this.mostrarBotonCheckDineroCliente = true;
+    }
+
+  }
+
+  ValidacionCheckCliente(){
+    this.checkCliente = !this.checkCliente;
+    this.ValidacionButtonGenerarOT();
+  }
+  ValidacionCheckClienteDinero(){
+    this.checkDinero = !this.checkDinero;
+    this.ValidacionButtonGenerarOT();
+  }
+
+  ValidacionButtonGenerarOT(){
+
+    if(this.checkCliente && this.checkDinero && this.ImpStatusCot == 'borrador'){
+      this.mostrarBotonGenerar_OT = true;
+      this.mostrarBotonEditar = false;
+      this.mostrarBotonGenerar_PDF = false;
+    }else{
+      this.mostrarBotonGenerar_OT = false;
+      this.mostrarBotonEditar = true;
+      this.mostrarBotonGenerar_PDF = true;
+    }
+  }
+
+  EditarDetalleCotizacion(){
+    this.isDisabled = false;
+    this.mostrarBotonCotizar = true;
+    this.mostrarBotonEditar = false;
+    this.mostrarBotonGuardar = true;
+    this.mostrarBotonGenerar_PDF = false;
+  }
+
+
+  
+
+  GenerarPdf(){
+
+  }
+
+  async GenerarOT(){
+
+    const objectIdcotizacion = {_idCotizacion : this.cotizacionId }
+
+
+
+    const updateCotizacion = await this.cotizadorService.ActualizarCotizacionGenerarOT(objectIdcotizacion).toPromise();
+
+
+    const datosCotizacion = {
+      _idCotizacion: this.cotizacionId,
+      NombreEmpresa: this.txtNombreEmpresa,
+      NombreContacto: this.txtNombreContacto,
+      Identificacion: this.txtNit,
+      TelContacto: this.txtTel_Contacto,
+      Email: this.txtEmail,
+      FechaEntrega: this.txtFechaEntrega,
+      Ciudad: this.txtCiudad,
+      DireccionEntrega: this.txtDireccionDeEntrega,
+      TipoCogedera: this.slcTipoCogedera,
+      TipoBolsa: this.slcTipoBolsa,
+      UnidadesRequeridas: this.txtUnidadesRequeridas,
+      Ancho_cm: this.txtAncho_cm,
+      Alto_cm: this.txtAlto_cm,
+      Fuelle_cm: this.txtFuelle_cm,
+      Asas_cm: this.txtLargoAsas_cm,
+      Material: this.slcMaterial,
+      Color: this.txtColor,
+      Estampado: this.slcEstampado,
+      Caras: this.slcCaras,
+      NumeroTintas: this.slcNumeroTintas,
+      ColorTintas: this.txtColorTintas,
+      ValorBolsa:  this.respuestaCotizacion.ValorPorBolsa,
+      Utilidad: this.strUtilidad,
+      PVSinIvaUnitario: this.respuestaCotizacion.PVSinIvaUnitario,
+      PVSinIvaTotal: this.respuestaCotizacion.PVSinIvaTotal,
+      PVConIvaUnitario: this.respuestaCotizacion.PVConIvaUnitario,
+      PVConIvaTotal:  this.respuestaCotizacion.PVConIvaTotal ,
+      NombreUsuario:localStorage.getItem('user'),
+      _IdUsuario:localStorage.getItem('_IdUser'),
+      _EstadoCotizacion:'borrador',
+      CheckCliente:this.checkCliente,
+      CheckDineroCliente:this.checkDinero
+    };
+
+    this.socketWebService.emitEvent(datosCotizacion);
+    this.router.navigate(['/oTActivas']);
   }
 
 

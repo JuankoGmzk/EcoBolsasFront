@@ -1,4 +1,5 @@
 <body>
+
   <div class="row">
     <div class="col-md-12">
       <mat-card class="card">
@@ -10,42 +11,42 @@
             <div class="col-md-4">
               <mat-form-field class="example-full-width">
                 <mat-label>Nombre empresa</mat-label>
-                <input matInput [(ngModel)]="txtNombreEmpresa">
+                <input matInput [(ngModel)]="txtNombreEmpresa"  [disabled]="isDisabled">
                 <div *ngIf="blnNombreEmpresa" style="color: brown;">El campo empresa es obligatorio</div>
               </mat-form-field>
             </div>
             <div class="col-md-4">
               <mat-form-field class="example-full-width">
                 <mat-label>Nombre contacto</mat-label>
-                <input id="txtNombreContacto" matInput [(ngModel)]="txtNombreContacto">
+                <input id="txtNombreContacto" matInput [(ngModel)]="txtNombreContacto" [disabled]="isDisabled">
                 <div *ngIf="blnNombreContacto" style="color: brown;">El campo nombre de contacto es obligatorio</div>
               </mat-form-field>
             </div>
             <div class="col-md-4">
               <mat-form-field class="example-full-width">
                 <mat-label>Nit / Cédula</mat-label>
-                <input id="txtNit" matInput [(ngModel)]="txtNit">
+                <input id="txtNit" matInput [(ngModel)]="txtNit" [disabled]="isDisabled">
                 <div *ngIf="blnNit" style="color: brown;">El campo nit es obligatorio</div>
               </mat-form-field>
             </div>
             <div class="form-group col-md-4">
               <mat-form-field class="example-full-width">
                 <mat-label>Tel. Contacto</mat-label>
-                <input id="txtTel_Contacto" matInput [(ngModel)]="txtTel_Contacto">
+                <input id="txtTel_Contacto" matInput [(ngModel)]="txtTel_Contacto" [disabled]="isDisabled">
                 <div *ngIf="blnTel_Contacto" style="color: brown;">El campo telefono de contacto es obligatorio</div>
               </mat-form-field>
             </div>
             <div class="form-group col-md-4">
               <mat-form-field class="example-full-width">
                 <mat-label>Email</mat-label>
-                <input id="txtEmail" matInput [(ngModel)]="txtEmail">
+                <input id="txtEmail" matInput [(ngModel)]="txtEmail" [disabled]="isDisabled">
                 <div *ngIf="blnEmail" style="color: brown;">El campo email es obligatorio</div>
               </mat-form-field>
             </div>
             <div class="form-group col-md-4">
               <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Fecha de entrega</mat-label>
-                <input matInput [matDatepicker]="picker" id="txtFechaEntrega" [(ngModel)]="txtFechaEntrega">
+                <input matInput [matDatepicker]="picker" id="txtFechaEntrega" [(ngModel)]="txtFechaEntrega" [disabled]="isDisabled">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker [dateClass]="dateClass" #picker color="primary"></mat-datepicker>
@@ -55,14 +56,14 @@
             <div class="form-group col-md-6">
               <mat-form-field class="example-full-width">
                 <mat-label>Ciudad</mat-label>
-                <input id="txtCiudad" matInput [(ngModel)]="txtCiudad">
+                <input id="txtCiudad" matInput [(ngModel)]="txtCiudad" [disabled]="isDisabled">
                 <div *ngIf="blnCiudad" style="color: brown;">El campo ciudad es obligatorio</div>
               </mat-form-field>
             </div>
             <div class="form-group col-md-6">
               <mat-form-field class="example-full-width">
                 <mat-label>Dirección de entrega</mat-label>
-                <input id="txtDireccionDeEntrega" matInput [(ngModel)]="txtDireccionDeEntrega">
+                <input id="txtDireccionDeEntrega" matInput [(ngModel)]="txtDireccionDeEntrega" [disabled]="isDisabled">
                 <div *ngIf="blnDireccionDeEntrega" style="color: brown;">El campo dirección de entrega es obligatorio
                 </div>
               </mat-form-field>
@@ -86,7 +87,7 @@
                 <div class="col-md-12">
                   <mat-form-field appearance="fill" class="example-full-width">
                     <mat-label>Tipo Cogedera</mat-label>
-                    <mat-select id="slcTipoCogedera" [(ngModel)]="slcTipoCogedera"
+                    <mat-select id="slcTipoCogedera" [(ngModel)]="slcTipoCogedera" [disabled]="isDisabled"
                       (selectionChange)="validateShowInputAsas(slcTipoCogedera)">
                       <mat-option *ngFor="let food of TipoCogedera" [value]="food.value">
                         {{food.viewValue}}
@@ -98,7 +99,7 @@
                 <div class="col-md-12">
                   <mat-form-field appearance="fill" class="example-full-width">
                     <mat-label>Tipo bolsa</mat-label>
-                    <mat-select id="slcTipoBolsa" [(ngModel)]="slcTipoBolsa"
+                    <mat-select id="slcTipoBolsa" [(ngModel)]="slcTipoBolsa" [disabled]="isDisabled"
                       (selectionChange)="validateShowInputBolsas(slcTipoBolsa)"
                       (ngModelChange)="CambiarImagen(slcTipoBolsa)">
                       <mat-option *ngFor="let food of TipoBolsa" [value]="food.value">
@@ -120,7 +121,7 @@
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <mat-label>Unidades requeridas</mat-label>
-                <input matInput id="txtUnidadesRequeridas" [(ngModel)]="txtUnidadesRequeridas">
+                <input matInput id="txtUnidadesRequeridas" [(ngModel)]="txtUnidadesRequeridas" [disabled]="isDisabled">
                 <div *ngIf="blnUnidadesRequeridas" style="color: brown;">El campo unidades requeridas es obligatorio
                 </div>
               </mat-form-field>
@@ -129,14 +130,14 @@
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <mat-label>Ancho (cm)</mat-label>
-                <input matInput id="txtAncho_cm" [(ngModel)]="txtAncho_cm">
+                <input matInput id="txtAncho_cm" [(ngModel)]="txtAncho_cm" [disabled]="isDisabled">
                 <div *ngIf="blnAncho_cm" style="color: brown;">El campo ancho (cm) es obligatorio</div>
               </mat-form-field>
             </div>
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <mat-label>Alto (cm)</mat-label>
-                <input matInput id="txtAlto_cm" [(ngModel)]="txtAlto_cm">
+                <input matInput id="txtAlto_cm" [(ngModel)]="txtAlto_cm" [disabled]="isDisabled">
                 <div *ngIf="blnAlto_cm" style="color: brown;">El campo alto (cm) es obligatorio</div>
               </mat-form-field>
             </div>
@@ -144,7 +145,7 @@
             <div class="col-md-6" *ngIf="blnFuelleOpen">
               <mat-form-field class="example-full-width">
                 <mat-label>Fuelle (cm)</mat-label>
-                <input matInput id="txtFuelle_cm" [(ngModel)]="txtFuelle_cm">
+                <input matInput id="txtFuelle_cm" [(ngModel)]="txtFuelle_cm" [disabled]="isDisabled">
                 <div *ngIf="blnFuelle_cm" style="color: brown;">El campo fuelle (cm) es obligatorio</div>
               </mat-form-field>
             </div>
@@ -152,7 +153,7 @@
             <div class="col-md-6" *ngIf="blnAsas">
               <mat-form-field class="example-full-width">
                 <mat-label>Largo Asas (cm)</mat-label>
-                <input matInput id="txtLargoAsas_cm" [(ngModel)]="txtLargoAsas_cm">
+                <input matInput id="txtLargoAsas_cm" [(ngModel)]="txtLargoAsas_cm" [disabled]="isDisabled">
                 <div *ngIf="blnLargoAsas_cm" style="color: brown;">El campo largo de asas (cm) es obligatorio</div>
               </mat-form-field>
             </div>
@@ -172,7 +173,7 @@
             <div class="col-md-6">
               <mat-form-field appearance="fill" class="example-full-width">
                 <mat-label>Material</mat-label>
-                <mat-select id="slcMaterial" [(ngModel)]="slcMaterial">
+                <mat-select id="slcMaterial" [(ngModel)]="slcMaterial" [disabled]="isDisabled">
                   <mat-option *ngFor="let food of TipoMaterial" [value]="food.value">
                     {{food.viewValue}}
                   </mat-option>
@@ -183,7 +184,7 @@
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <mat-label>Color</mat-label>
-                <input matInput id="txtColor" [(ngModel)]="txtColor">
+                <input matInput id="txtColor" [(ngModel)]="txtColor" [disabled]="isDisabled">
                 <div *ngIf="blnColor" style="color: brown;">El campo color es obligatorio</div>
               </mat-form-field>
             </div>
@@ -191,7 +192,7 @@
             <div class="col-md-6">
               <mat-form-field appearance="fill" class="example-full-width">
                 <mat-label>Estampado</mat-label>
-                <mat-select id="slcEstampado" [(ngModel)]="slcEstampado">
+                <mat-select id="slcEstampado" [(ngModel)]="slcEstampado" [disabled]="isDisabled">
                   <mat-option *ngFor="let food of TipoEstampado" [value]="food.value">
                     {{food.viewValue}}
                   </mat-option>
@@ -203,7 +204,7 @@
             <div class="col-md-6">
               <mat-form-field appearance="fill" class="example-full-width">
                 <mat-label>Caras</mat-label>
-                <mat-select id="slcCaras" [(ngModel)]="slcCaras">
+                <mat-select id="slcCaras" [(ngModel)]="slcCaras" [disabled]="isDisabled">
                   <mat-option *ngFor="let food of NumeroCaras" [value]="food.value">
                     {{food.viewValue}}
                   </mat-option>
@@ -215,7 +216,7 @@
             <div class="col-md-6">
               <mat-form-field appearance="fill" class="example-full-width">
                 <mat-label>Numero de tintas</mat-label>
-                <mat-select id="slcNumeroTintas" [(ngModel)]="slcNumeroTintas">
+                <mat-select id="slcNumeroTintas" [(ngModel)]="slcNumeroTintas" [disabled]="isDisabled">
                   <mat-option *ngFor="let food of NumeroTintas" [value]="food.value">
                     {{food.viewValue}}
                   </mat-option>
@@ -227,14 +228,14 @@
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <mat-label>Color tintas</mat-label>
-                <input type="color" matInput id="txtColorTintas" [(ngModel)]="txtColorTintas">
+                <input type="color" matInput id="txtColorTintas" [(ngModel)]="txtColorTintas" [disabled]="isDisabled">
                 <div *ngIf="blnColorTintas" style="color: brown;">El campo color de tintas es obligatorio</div>
               </mat-form-field>
             </div>
 
             <div class="col-md-12 text-center">
               <button type="button" class="btn btn-primary btn-lg text-center"
-                (click)="CalcularCorteBackend()">Cotizar</button>
+                (click)="CalcularCorteBackend()" *ngIf="mostrarBotonCotizar">Cotizar</button>
             </div>
           </div>
         </mat-card-content>
@@ -295,16 +296,16 @@
               </div>
               <div class="row">
                 <div class="col-md-5">
-                  <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                  <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off" [(ngModel)]="checkCliente" (click)="ValidacionCheckCliente()" *ngIf="mostrarBotonCheckCliente"> 
                   <label class="btn btn-outline-success" for="btn-check-outlined">Check Cliente</label>
-                  <input type="checkbox" class="btn-check" id="btn-check-outlined2" autocomplete="off">
+                  <input type="checkbox" class="btn-check" id="btn-check-outlined2" autocomplete="off" [(ngModel)]="checkDinero" (click)="ValidacionCheckClienteDinero()" *ngIf="mostrarBotonCheckDineroCliente">
                   <label class="btn btn-outline-success" for="btn-check-outlined2">Dinero cliente</label><br>
                 </div>
                 <div class="col-md-7">
-                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="GuardarCotizacionBackend()">Guardar</button>
-                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="{}">Generar PDF</button>
-                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="{}">Editar</button>
-                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="{}">Generar OT</button>
+                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="GuardarCotizacionBackend();" *ngIf="mostrarBotonGuardar">Guardar</button>
+                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="GenerarPdf();" *ngIf="mostrarBotonGenerar_PDF">Generar PDF</button>
+                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="EditarDetalleCotizacion();" *ngIf="mostrarBotonEditar">Editar</button>
+                  <button type="button" class="btn btn-primary btn-lg text-center" (click)="GenerarOT();" *ngIf="mostrarBotonGenerar_OT">Generar OT</button>
                 </div>
               </div>
               
