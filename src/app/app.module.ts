@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
-import { SigupComponent } from './components/crearUsuario/sigup.component';
+import { SigupComponent } from './components/sigup/sigup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { TaskComponent } from './components/task/task.component';
 import { PrivateTaskComponent } from './components/private-task/private-task.component';
@@ -33,6 +33,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatDividerModule} from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { LobbyComponent } from './components/lobby/lobby.component';
+import { MisCotizacionesComponent } from './components/mis-cotizaciones/mis-cotizaciones.component';
+import { MisOTComponent } from './components/mis-ot/mis-ot.component';
+import { UsersComponent } from './components/users/users.component';
+import { OTActivasComponent } from './components/otactivas/otactivas.component';
+import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 
 
 @NgModule({
@@ -45,7 +50,12 @@ import { LobbyComponent } from './components/lobby/lobby.component';
     CreateTaskComponent,
     CotizadorComponent,
     MaterialesComponent,
-    LobbyComponent
+    LobbyComponent,
+    MisCotizacionesComponent,
+    MisOTComponent,
+    UsersComponent,
+    OTActivasComponent,
+    MiPerfilComponent
   ],
   imports: [
     BrowserModule,
