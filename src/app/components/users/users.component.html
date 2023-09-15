@@ -1,0 +1,40 @@
+<p>Usuarios!</p>
+
+
+<!-- cotizaciones.component.html -->
+<div class="mat-elevation-z2">
+    <table mat-table [dataSource]="usuarios">
+        <!-- Columna para el nombre del NombreEmpresa -->
+        <ng-container matColumnDef="primerNombre">
+            <th mat-header-cell *matHeaderCellDef> Primer Nombre </th>
+            <td mat-cell *matCellDef="let usuario"> {{ usuario.primerNombre }} </td>
+        </ng-container>
+
+        <!-- Columna para el NombreContacto -->
+        <ng-container matColumnDef="cargo">
+            <th mat-header-cell *matHeaderCellDef> cargo </th>
+            <td mat-cell *matCellDef="let usuario"> {{ usuario.cargo }} </td>
+        </ng-container>
+
+        <!-- Columna para el Identificacion -->
+        <ng-container matColumnDef="cedula">
+            <th mat-header-cell *matHeaderCellDef> cedula </th>
+            <td mat-cell *matCellDef="let usuario"> {{ usuario.cedula }} </td>
+        </ng-container>
+
+          <!-- Columna para el PVConIvaTotal -->
+          <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
+            <td mat-cell *matCellDef="let usuario" class="text-center"> 
+              
+                <button type="button" class="btn btn-info" (click)="VerUsuario(usuario);">Ver</button>  
+            </td>
+       
+        </ng-container>
+
+        <!-- Otras columnas pueden agregarse de manera similar -->
+
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+    </table>
+</div>
