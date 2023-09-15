@@ -21,15 +21,24 @@ export class SocketWebService extends Socket {
       }
     })
     this.listen();
+    this.OtsGeneradas();
   }
 
   listen = () => {
     this.ioSocket.on('evento', (res:any) => this.outEven.emit(res));   
 
   }
+  OtsGeneradas = () => {
+    this.ioSocket.on('oTsGeneradas',(res:any) =>  this.outEven.emit(res))
+  }
+
+  emitEventBack = (payload = {}) => {
+    this.ioSocket.emit('oTsGeneradasBack',payload)
+  };
+
   emitEvent = (payload = {}) => {
     this.ioSocket.emit('chat:message', payload)
-
+ 
   }
 }
 
