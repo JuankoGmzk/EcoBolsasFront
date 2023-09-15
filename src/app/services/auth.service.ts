@@ -22,6 +22,16 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
+  hasPermission(permission: string): boolean {
+    
+    const strRol : string | undefined = localStorage.getItem('rol')?.toString();
+    const boolValidateRol = strRol !== undefined && permission.includes(strRol);
+    if(!boolValidateRol){
+      return false;
+    }
+    return true;
+  }
+
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/signin']);
