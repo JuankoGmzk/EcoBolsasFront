@@ -56,7 +56,7 @@ export class CreateTaskComponent {
         res => {
           console.log(res);
           this.socketioService.emitEvent(this.tarea);
-          this.router.navigate(['/tasks']);
+          this.router.navigate(['/tasks']); 
         },
         err => console.log(err)
       )
