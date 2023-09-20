@@ -148,7 +148,7 @@ export class CotizadorComponent {
   blnCotizacionTable: boolean = false;
 
   //Valores mostrar usuario cotización final
-  strUtilidad: number = 25;
+  strUtilidad: number = 20;
   checkCliente:boolean = false;
   checkDinero:boolean = false;
 
@@ -205,7 +205,7 @@ export class CotizadorComponent {
       }
       // Ahora puedes usar this.cotizacionId para cargar los detalles de la cotización con ese ID
     });
-  }
+  } 
 
   validateInput() {
 
@@ -286,7 +286,8 @@ export class CotizadorComponent {
       Estampado: this.slcEstampado,
       Caras: this.slcCaras,
       NumeroTintas: this.slcNumeroTintas,
-      ColorTintas: this.txtColorTintas
+      ColorTintas: this.txtColorTintas,
+      AjusteCot : this.strUtilidad
     };
     try {
       const respuesta = await this.cotizadorService.postCrearCotizacion(datosCotizacion).toPromise();
@@ -339,8 +340,9 @@ export class CotizadorComponent {
     this.RutaImagen = strMaterial;
   }
 
-  CambiarUtilidad(strUtilidad: string) {
-    return null;
+  CambiarUtilidad(strUtilidad: number) {
+    console.log(strUtilidad)
+    this.CalcularCorteBackend();
   }
 
   AllMateriales() {

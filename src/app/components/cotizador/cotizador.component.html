@@ -261,7 +261,7 @@
                   <div class="col-md-6">
                     <mat-form-field class="example-full-width">
                       <mat-label>Utilidad:</mat-label>
-                      <input matInput [(ngModel)]="strUtilidad" (keyup)="CambiarUtilidad('true')">
+                      <input matInput [(ngModel)]="strUtilidad" (keyup)="CambiarUtilidad(strUtilidad)" [disabled]="isDisabled">
                     </mat-form-field>
                   </div>
 
