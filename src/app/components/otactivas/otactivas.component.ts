@@ -26,6 +26,10 @@ export class OTActivasComponent {
     })
   }
 
+  ngOnInit(): void {
+    this.ObtenerCotizacionesOTActivas();
+  } 
+
   async ObtenerCotizacionesOTActivas (){
 
     const CotizacionesOTActivas = await this.cotizacionService.ObtenerOtActivas().toPromise();
