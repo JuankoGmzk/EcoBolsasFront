@@ -1,6 +1,7 @@
 import { Component,ViewEncapsulation,TemplateRef   } from '@angular/core';
 import { CotizadorService } from "../../services/cotizador.service";
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { type } from 'jquery';
 
 
 @Component({
@@ -25,6 +26,10 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class MaterialesComponent {
 
+  _idUser : string | null = localStorage.getItem('_IdUser');
+  _idUserString = this._idUser == null ? '' : this._idUser
+
+
   materiales = [{
     _id: '',
     nombreMaterial: '',
@@ -33,6 +38,7 @@ export class MaterialesComponent {
     ancho_m: '',
     grm_m2: '',
     costo_sinIva_Rollo: '',
+    costoAnterior:'',
     porcentajeValor: '',
     resultMtrXRollo:'',
     resultMtrXRolloDetal:''
@@ -41,13 +47,16 @@ export class MaterialesComponent {
   impresiones = [{
     _id: '',
     nombreImpresion: '',
-    costoImpresion: ''
+    costoImpresion: '',
+    antiguoValorcostoImpresion:'',
   }]
 
   confecciones = [{
     _id:'',
     nombreConfeccion:'',
-    costoConfeccion:''
+    costoConfeccion:'',
+    antiguoValorcostoConfeccion:'',
+
   }]
 
   cordones = [{
@@ -55,7 +64,8 @@ export class MaterialesComponent {
     nombreCordon : '',
     largoRollo : '',
     valorRollo : '',
-    valorMetro : ''
+    valorMetro : '',
+    antiguoValorcostovalorMetro:'',
   }]
 
   editingItem: any = null;
@@ -122,7 +132,10 @@ export class MaterialesComponent {
 
   async ObtenerMateriales() {
     const Materiales = await this.cotizadorService.getMateriales().toPromise();
+
     this.materiales = Materiales;
+
+    console.log( this.materiales)
   }
 
   async ObtenerImpresiones() {
@@ -146,8 +159,12 @@ export class MaterialesComponent {
     this.editingItem= id;
   }
 
-  saveEditItem(material:object){
+  saveEditItem(material:object, user:string){ 
     this.editingItem= null;
+
+
+    console.log(material)
+    console.log(typeof(material))
 
     this.cotizadorService.actualizarMaterialById(material).subscribe(
       res => {

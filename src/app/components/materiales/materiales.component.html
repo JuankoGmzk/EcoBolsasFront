@@ -1,4 +1,4 @@
-<mat-accordion>
+<mat-accordion style="width: 100%;">
     <mat-expansion-panel (opened)="panelOpenMateriales = true"
     (closed)="panelOpenMateriales = false">
         <mat-expansion-panel-header>
@@ -81,7 +81,7 @@
                                             </div>
                                             <div class="col-md-5">
                                                 <button type="button" class="btn btn-info m-1" *ngIf="editingItem !== material._id" (click)="EditarMaterial(material, material._id)">Editar</button>
-                                                <button type="button" class="btn btn-success m-1" *ngIf="editingItem === material._id" (click)="saveEditItem(material)">Guardar</button>
+                                                <button type="button" class="btn btn-success m-1" *ngIf="editingItem === material._id" (click)="saveEditItem(material,_idUserString)">Guardar</button>
                                             </div>
                                         </div>
                                     </td>
@@ -149,7 +149,7 @@
                                                     (click)="EditarMaterial(impresion, impresion._id)">Editar</button>
                                                 <button type="button" class="btn btn-success m-1"
                                                     *ngIf="editingItem === impresion._id"
-                                                    (click)="saveEditItem(impresion)">Guardar</button>
+                                                    (click)="saveEditItem(impresion,_idUserString)">Guardar</button>
                                             </div>
                                         </div>
                                     </td>
@@ -217,7 +217,7 @@
                                                     (click)="EditarMaterial(confeccion, confeccion._id)">Editar</button>
                                                 <button type="button" class="btn btn-success m-1"
                                                     *ngIf="editingItem === confeccion._id"
-                                                    (click)="saveEditItem(confeccion)">Guardar</button>
+                                                    (click)="saveEditItem(confeccion,_idUserString)">Guardar</button>
                                             </div>
                                         </div>
                                     </td>
@@ -294,7 +294,7 @@
                                                     (click)="EditarMaterial(cordon, cordon._id)">Editar</button>
                                                 <button type="button" class="btn btn-success m-1"
                                                     *ngIf="editingItem === cordon._id"
-                                                    (click)="saveEditItem(cordon)">Guardar</button>
+                                                    (click)="saveEditItem(cordon,_idUserString)">Guardar</button>
                                             </div>
                                         </div>
                                     </td>
