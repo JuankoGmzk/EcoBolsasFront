@@ -8,6 +8,7 @@
       <div class="user-info">
         <p>Nombre: {{ nombre }}</p>
         <p>Cargo: {{ cargo }}</p>
+        <p>Rol: {{ rol }}</p>
       </div>
     </div>
   </div>
@@ -29,6 +30,9 @@
               <a routerLink="/misOT">Histórico de mis OT</a>
             </li>
           </ul>
+        </li>
+        <li class="list-group-item custom-list-item" *ngIf="blpermisosOTActivas">
+          <a routerLink="/oTActivas">OT Activas</a>
         </li>
         <li class="list-group-item custom-list-item" *ngIf="blpermisosCambiarPrecios">
           <a routerLink="/materiales">Cambiar precios</a>
