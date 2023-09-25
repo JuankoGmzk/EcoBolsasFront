@@ -168,7 +168,7 @@ export class MaterialesComponent {
 
     this.cotizadorService.actualizarMaterialById(material).subscribe(
       res => {
-        console.log("registro actualizado",res)
+        console.log("registro actualizado",res) 
         window.location.reload();
       },
       err => {
