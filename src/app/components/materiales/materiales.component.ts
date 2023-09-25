@@ -38,7 +38,7 @@ export class MaterialesComponent {
     ancho_m: '',
     grm_m2: '',
     costo_sinIva_Rollo: '',
-    costoAnterior:'',
+    costoAnteriorFront:'',
     porcentajeValor: '',
     resultMtrXRollo:'',
     resultMtrXRolloDetal:''
@@ -169,6 +169,7 @@ export class MaterialesComponent {
     this.cotizadorService.actualizarMaterialById(material).subscribe(
       res => {
         console.log("registro actualizado",res)
+        window.location.reload();
       },
       err => {
         console.log(err)
