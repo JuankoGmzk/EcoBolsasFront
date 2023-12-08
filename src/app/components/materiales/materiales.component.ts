@@ -1,9 +1,7 @@
 import { Component,ViewEncapsulation,TemplateRef   } from '@angular/core';
 import { CotizadorService } from "../../services/cotizador.service";
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { type } from 'jquery';
-
-
+ 
 @Component({
   selector: 'app-materiales',
   templateUrl: './materiales.component.html',
@@ -69,6 +67,7 @@ export class MaterialesComponent {
   }]
 
   editingItem: any = null;
+  editingImpreion:any = null;
   panelOpenMateriales = false;
   panelOpenImpresiones = false;
   panelOpenConfecciones = false;
@@ -159,6 +158,7 @@ export class MaterialesComponent {
     this.editingItem= id;
   }
 
+
   saveEditItem(material:object, user:string){ 
     this.editingItem= null;
 
@@ -178,4 +178,13 @@ export class MaterialesComponent {
 
   }
 
+  EditarImpresion(impresion:object, id:string){
+    console.log("editando la impresion");
+    this.editingImpreion = id
+  }
+
+  saveEditImpresion(material:object,user:string){
+//hasta acá quedamos 
+
+  }
 }
