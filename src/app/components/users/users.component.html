@@ -26,8 +26,15 @@
           <ng-container matColumnDef="Acciones">
             <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
             <td mat-cell *matCellDef="let usuario" class="text-center"> 
-              
-                <button type="button" class="btn btn-info" (click)="VerUsuario(usuario);">Ver</button>  
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-info"  (click)="openModal()">Ver</button>  <br>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-warning" (click)="EditarUsuario(usuario);">Editar</button>  
+                    </div>
+                </div>
+               
             </td>
        
         </ng-container>
