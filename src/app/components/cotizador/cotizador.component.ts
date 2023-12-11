@@ -7,12 +7,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { SocketWebService } from '../../services/socket-web.service';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
-
 
 interface InputSelect {
   value: string;
