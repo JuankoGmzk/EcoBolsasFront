@@ -76,7 +76,7 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-md-5">
-                                                <button type="button" class="btn btn-outline-danger  m-1" (click)="openModalDeleteMaterial(templateConfirmeDelete)">Borrar</button>
+                                                <button type="button" class="btn btn-outline-danger  m-1" (click)="openModalDeleteMaterial(templateConfirmeDelete, material._id)">Borrar</button>
 
                                             </div>
                                             <div class="col-md-5">
@@ -121,18 +121,18 @@
                                 <tr *ngFor="let impresion of impresiones, let i = index">
                                     <th scope="row">{{i+1}}</th>
                                     <th scope="row">
-                                        <span *ngIf="editingItem !== impresion._id">{{ impresion.nombreImpresion
+                                        <span *ngIf="editingImpreion !== impresion._id">{{ impresion.nombreImpresion
                                             }}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
-                                            *ngIf="editingItem === impresion._id"
+                                            *ngIf="editingImpreion === impresion._id"
                                             [(ngModel)]="impresion.nombreImpresion" />
                                     </th>
 
                                     <td class="table-info">
                                         <span
-                                            *ngIf="editingItem !== impresion._id">{{impresion.costoImpresion}}</span>
+                                            *ngIf="editingImpreion !== impresion._id">{{impresion.costoImpresion}}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
-                                            *ngIf="editingItem === impresion._id"
+                                            *ngIf="editingImpreion === impresion._id"
                                             [(ngModel)]="impresion.costoImpresion" />
                                     </td>
 
@@ -140,16 +140,16 @@
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <button type="button" class="btn btn-danger  m-1"
-                                                    (click)="openModalDeleteImpresion(templateConfirmeDeleteImpresion)">Borrar</button>
+                                                    (click)="openModalDeleteImpresion(templateConfirmeDeleteImpresion,impresion._id)">Borrar</button>
 
                                             </div>
                                             <div class="col-md-5">
                                                 <button type="button" class="btn btn-info m-1"
-                                                    *ngIf="editingItem !== impresion._id"
+                                                    *ngIf="editingImpreion !== impresion._id"
                                                     (click)="EditarImpresion(impresion, impresion._id)">Editar</button>
                                                 <button type="button" class="btn btn-success m-1"
-                                                    *ngIf="editingItem === impresion._id"
-                                                    (click)="saveEditItem(impresion,_idUserString)">Guardar</button>
+                                                    *ngIf="editingImpreion === impresion._id"
+                                                    (click)="saveEditImpresion(impresion,_idUserString)">Guardar</button>
                                             </div>
                                         </div>
                                     </td>
@@ -190,18 +190,18 @@
                                 <tr *ngFor="let confeccion of confecciones, let i = index">
                                     <th scope="row">{{i+1}}</th>
                                     <th scope="row">
-                                        <span *ngIf="editingItem !== confeccion._id">{{ confeccion.nombreConfeccion
+                                        <span *ngIf="editingConfeccion !== confeccion._id">{{ confeccion.nombreConfeccion
                                             }}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
-                                            *ngIf="editingItem === confeccion._id"
+                                            *ngIf="editingConfeccion === confeccion._id"
                                             [(ngModel)]="confeccion.nombreConfeccion" />
                                     </th>
 
                                     <td class="table-info">
                                         <span
-                                            *ngIf="editingItem !== confeccion._id">{{confeccion.costoConfeccion}}</span>
+                                            *ngIf="editingConfeccion !== confeccion._id">{{confeccion.costoConfeccion}}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
-                                            *ngIf="editingItem === confeccion._id"
+                                            *ngIf="editingConfeccion === confeccion._id"
                                             [(ngModel)]="confeccion.costoConfeccion" />
                                     </td>
 
@@ -209,15 +209,15 @@
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <button type="button" class="btn btn-danger  m-1"
-                                                    (click)="openModalDeleteConfeccion(templateConfirmeDeleteConfeccion)">Borrar</button>
+                                                    (click)="openModalDeleteConfeccion(templateConfirmeDeleteConfeccion,confeccion._id )">Borrar</button>
                                             </div>
                                             <div class="col-md-5">
                                                 <button type="button" class="btn btn-info m-1"
-                                                    *ngIf="editingItem !== confeccion._id"
-                                                    (click)="EditarMaterial(confeccion, confeccion._id)">Editar</button>
+                                                    *ngIf="editingConfeccion !== confeccion._id"
+                                                    (click)="EditarConfeccion(confeccion, confeccion._id)">Editar</button>
                                                 <button type="button" class="btn btn-success m-1"
-                                                    *ngIf="editingItem === confeccion._id"
-                                                    (click)="saveEditItem(confeccion,_idUserString)">Guardar</button>
+                                                    *ngIf="editingConfeccion === confeccion._id"
+                                                    (click)="saveEditConfeccion(confeccion,_idUserString)">Guardar</button>
                                             </div>
                                         </div>
                                     </td>
@@ -260,41 +260,41 @@
                                 <tr *ngFor="let cordon of cordones, let i = index">
                                     <th scope="row">{{i+1}}</th>
                                     <th scope="row">
-                                        <span *ngIf="editingItem !== cordon._id">{{ cordon.nombreCordon }}</span>
+                                        <span *ngIf="editingCordon !== cordon._id">{{ cordon.nombreCordon }}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
-                                            *ngIf="editingItem === cordon._id" [(ngModel)]="cordon.nombreCordon" />
+                                            *ngIf="editingCordon === cordon._id" [(ngModel)]="cordon.nombreCordon" />
                                     </th>
                                     <th scope="row">
-                                        <samp *ngIf="editingItem !== cordon._id">{{cordon.largoRollo}}</samp>
+                                        <samp *ngIf="editingCordon !== cordon._id">{{cordon.largoRollo}}</samp>
                                         <input type="text" class="form-control bg-transparent text-dark"
-                                            *ngIf="editingItem === cordon._id" [(ngModel)]="cordon.largoRollo" />
+                                            *ngIf="editingCordon === cordon._id" [(ngModel)]="cordon.largoRollo" />
 
                                     </th>
                                     <td class="table-info">
                                         <span
-                                            *ngIf="editingItem !== cordon._id">{{cordon.valorRollo}}</span>
+                                            *ngIf="editingCordon !== cordon._id">{{cordon.valorRollo}}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
-                                            *ngIf="editingItem === cordon._id" [(ngModel)]="cordon.valorRollo" />
+                                            *ngIf="editingCordon === cordon._id" [(ngModel)]="cordon.valorRollo" />
                                     </td>
                                     <td class="table-info">
                                         <span
-                                            *ngIf="editingItem !== cordon._id">{{cordon.valorMetro}}</span>
+                                            *ngIf="editingCordon !== cordon._id">{{cordon.valorMetro}}</span>
                                         <input type="text" class="form-control bg-transparent text-dark"
-                                            *ngIf="editingItem === cordon._id" [(ngModel)]="cordon.valorMetro" />
+                                            *ngIf="editingCordon === cordon._id" [(ngModel)]="cordon.valorMetro" />
                                     </td>
                                     <td>
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <button type="button" class="btn btn-danger  m-1"
-                                                    (click)="openModalDeleteCordon(templateConfirmeDeleteCordon)">Borrar</button>
+                                                    (click)="openModalDeleteCordon(templateConfirmeDeleteCordon, cordon._id)">Borrar</button>
                                             </div>
                                             <div class="col-md-5">
                                                 <button type="button" class="btn btn-info m-1"
-                                                    *ngIf="editingItem !== cordon._id"
-                                                    (click)="EditarMaterial(cordon, cordon._id)">Editar</button>
+                                                    *ngIf="editingCordon !== cordon._id"
+                                                    (click)="EditarCordon(cordon, cordon._id)">Editar</button>
                                                 <button type="button" class="btn btn-success m-1"
-                                                    *ngIf="editingItem === cordon._id"
-                                                    (click)="saveEditItem(cordon,_idUserString)">Guardar</button>
+                                                    *ngIf="editingCordon === cordon._id"
+                                                    (click)="saveEditCordon(cordon,_idUserString)">Guardar</button>
                                             </div>
                                         </div>
                                     </td>

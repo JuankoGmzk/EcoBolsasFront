@@ -68,6 +68,8 @@ export class MaterialesComponent {
 
   editingItem: any = null;
   editingImpreion:any = null;
+  editingConfeccion:any=null;
+  editingCordon:any=null;
   panelOpenMateriales = false;
   panelOpenImpresiones = false;
   panelOpenConfecciones = false;
@@ -81,40 +83,112 @@ export class MaterialesComponent {
     animated: true
   };
 
-  openModalDeleteMaterial(template: TemplateRef<any>) {
+  _idMaterialEliminar : string = "";
+
+  openModalDeleteMaterial(template: TemplateRef<any>, _id:string) {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+    this._idMaterialEliminar = _id;
   }
- 
+
   confirmDeleteMaterial(): void {
+
+    const obj_IdMaterial = {_id:this._idMaterialEliminar}
+
+     console.log(obj_IdMaterial)
+
+     this.cotizadorService.eliminarMaterialByid(obj_IdMaterial).subscribe(
+       res => { 
+         console.log("registro eliminado",res) 
+         window.location.reload();
+       },
+       err => {
+         console.log("Es este el error de backend?",err)
+       }
+     );
+
     this.modalRef?.hide();
   }
 
   //
+  _idImpresionEliminar : string = "";
 
-  openModalDeleteImpresion(template: TemplateRef<any>) {
+  openModalDeleteImpresion(template: TemplateRef<any>,_id:string) {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+    this._idImpresionEliminar = _id;
   }
- 
+
   confirmDeleteImpresion(): void {
+
+    const obj_IdImpresion = {_id:this._idImpresionEliminar}
+
+    console.log(obj_IdImpresion)
+
+    this.cotizadorService.eliminarImpresion(obj_IdImpresion).subscribe(
+      res => { 
+        console.log("registro eliminado",res) 
+        window.location.reload();
+      },
+      err => {
+        console.log("Es este el error de backend?",err)
+      }
+    );
+
     this.modalRef?.hide();
   }
   //
 
-  openModalDeleteConfeccion(template: TemplateRef<any>) {
+  _idConfeccionEliminar : string = "";
+
+  openModalDeleteConfeccion(template: TemplateRef<any>, _id:string) {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+    this._idConfeccionEliminar=_id;
   }
  
   confirmDeleteConfeccion(): void {
+
+     const obj_Id = {_id:this._idConfeccionEliminar}
+
+     console.log(obj_Id)
+
+     this.cotizadorService.eliminarConfeccion(obj_Id).subscribe(
+       res => { 
+         console.log("registro eliminado",res) 
+         window.location.reload();
+       },
+       err => {
+         console.log("Es este el error de backend?",err)
+       }
+     );
+
+    this._idConfeccionEliminar = "";
     this.modalRef?.hide();
   }
 
   //
 
-  openModalDeleteCordon(template: TemplateRef<any>) {
+  _idCordonEliminar : string = "";
+
+  openModalDeleteCordon(template: TemplateRef<any>, _id:string) {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+    this._idCordonEliminar = _id;
   }
- 
+
   confirmDeleteCordon(): void {
+
+    const obj_IdCordon = {_id:this._idCordonEliminar}
+
+    console.log(obj_IdCordon)
+
+    this.cotizadorService.eliminarCordon(obj_IdCordon).subscribe(
+      res => { 
+        console.log("registro eliminado",res) 
+        window.location.reload();
+      },
+      err => {
+        console.log("Es este el error de backend?",err)
+      }
+    );
+
     this.modalRef?.hide();
   }
  
@@ -161,13 +235,11 @@ export class MaterialesComponent {
 
   saveEditItem(material:object, user:string){ 
     this.editingItem= null;
-
-
     console.log(material)
     console.log(typeof(material))
 
     this.cotizadorService.actualizarMaterialById(material).subscribe(
-      res => {
+      res => { 
         console.log("registro actualizado",res) 
         window.location.reload();
       },
@@ -183,8 +255,56 @@ export class MaterialesComponent {
     this.editingImpreion = id
   }
 
-  saveEditImpresion(material:object,user:string){
-//hasta acá quedamos 
+  saveEditImpresion(impresion:object,user:string){
 
+    this.editingImpreion = null;
+
+    this.cotizadorService.actualizarImpresion(impresion).subscribe(
+      res => { 
+        console.log("registro actualizado",res) 
+        window.location.reload();
+      },
+      err => {
+        console.log(err)
+      }
+    );
+
+  }
+
+  EditarConfeccion(confeccion:object, id:string){
+    this.editingConfeccion=id;
+
+  }
+  saveEditConfeccion(confeccion:object,user:string){
+    this.editingConfeccion = null;
+
+    this.cotizadorService.actualizarConfeccion(confeccion).subscribe(
+      res => { 
+        console.log("registro actualizado",res) 
+        window.location.reload();
+      },
+      err => {
+        console.log(err)
+      }
+    );
+
+  }
+
+  EditarCordon(cordon:object,id:string){
+    this.editingCordon = id;
+  }
+
+  saveEditCordon(cordon:object,user:string){
+    this.editingCordon = null;
+
+    this.cotizadorService.actualizarCordon(cordon).subscribe(
+      res => { 
+        console.log("registro actualizado",res) 
+        window.location.reload();
+      },
+      err => {
+        console.log(err)
+      }
+    );
   }
 }
