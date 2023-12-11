@@ -38,6 +38,7 @@ import { MisOTComponent } from './components/mis-ot/mis-ot.component';
 import { UsersComponent } from './components/users/users.component';
 import { OTActivasComponent } from './components/otactivas/otactivas.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
+import { CreateMaterialsComponent } from './components/create-materials/create-materials.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
     MisOTComponent,
     UsersComponent,
     OTActivasComponent,
-    MiPerfilComponent
+    MiPerfilComponent,
+    CreateMaterialsComponent
   ],
   imports: [
     BrowserModule,
