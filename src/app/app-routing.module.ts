@@ -14,7 +14,8 @@ import { MisCotizacionesComponent } from "./components/mis-cotizaciones/mis-coti
 import { MisOTComponent } from './components/mis-ot/mis-ot.component';
 import { UsersComponent } from './components/users/users.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
-import { OTActivasComponent } from './components/otactivas/otactivas.component'
+import { OTActivasComponent } from './components/otactivas/otactivas.component';
+import { CreateMaterialsComponent } from "./components/create-materials/create-materials.component";
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path : 'misOT', component:MisOTComponent,canActivate: [AuthGuard]},
   { path : 'users', component:UsersComponent,canActivate: [AuthGuard], data: { requiredPermission: ['Administrador','Administrador3']}},
   { path : 'miPerfil', component:MiPerfilComponent,canActivate: [AuthGuard]},
-  { path : 'oTActivas', component:OTActivasComponent,canActivate: [AuthGuard]}
+  { path : 'oTActivas', component:OTActivasComponent,canActivate: [AuthGuard]},
+  { path : 'crearMaterial', component:CreateMaterialsComponent, canActivate:[AuthGuard], data: { requiredPermission: ['Administrador','JefeVentas']}}
 ];
 
 @NgModule({
