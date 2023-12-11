@@ -19,7 +19,8 @@ export class LobbyComponent {
   permisosCambiarPrecios = ['Administrador'];
   permisosUsuarios =['Administrador']; 
   permisosCrearUsuario =['Administrador'];
-  blpermisosOTActivas = ['Administrador', 'Colaborador', 'JefeVentas', 'JefeProduccion', 'JefeEstampado']
+  permisosOTActivas = ['Administrador', 'Colaborador', 'JefeVentas', 'JefeProduccion', 'JefeEstampado']
+  PermisosCrearMateriales = ['Administrador', 'JefeVentas'];
 
   blpermisosCotizar = this.permisosCotizar.includes(this.strRol);
   blpermisosCotizacionesRealizadas = this.permisosCotizacionesRealizadas.includes(this.strRol);
@@ -27,7 +28,8 @@ export class LobbyComponent {
   blpermisosCambiarPrecios = this.permisosCambiarPrecios.includes(this.strRol);
   blpermisosUsuarios = this.permisosUsuarios.includes(this.strRol);
   blpermisosCrearUsuario = this.permisosCrearUsuario.includes(this.strRol);
-  blblpermisosOTActivas = this.blpermisosOTActivas.includes(this.strRol);
+  blpermisosOTActivas = this.permisosOTActivas.includes(this.strRol);
+  blPermisosCrearMateriales = this.PermisosCrearMateriales.includes(this.strRol);
 
   mostrarSubopciones = false;
 }
