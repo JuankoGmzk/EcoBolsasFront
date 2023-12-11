@@ -12,8 +12,10 @@ export class SocketWebService extends Socket {
   constructor(
 
   ) {
+    //private URL = 'https://ecobackend18.azurewebsites.net/
     super({
-      url: 'http://localhost:4000',
+      //url: 'http://localhost:4000',
+      url:'https://ecobackend18.azurewebsites.net',
       options: {
         query: {
           nameRoom: ''

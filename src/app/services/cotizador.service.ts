@@ -6,7 +6,8 @@ import {HttpClient} from '@angular/common/http'
 })
 export class CotizadorService {
 
-  private URL = 'http://localhost:4000/cotizador';
+  //private URL = 'http://localhost:4000/cotizador';
+  private URL = 'https://ecobackend18.azurewebsites.net/cotizador';
   constructor(private http: HttpClient) { }
 
   
@@ -22,6 +23,10 @@ export class CotizadorService {
     return this.http.put<any>(this.URL+"/actualizarMaterial",material);
   }
 
+  eliminarMaterialByid(material:object){
+    return this.http.post<any>(this.URL+"/eliminarMaterial", material)
+  }
+
   //Impresion
   getImpresiones(){
     return this.http.get<any>(this.URL + "/AllImpresiones");
@@ -31,15 +36,30 @@ export class CotizadorService {
     return this.http.post<any>(this.URL + '/ImpresionById',impresion)
   }
 
+  actualizarImpresion(impresion:object){
+    return this.http.put<any>(this.URL + '/actualizarImpresion', impresion)
+  }
+
+  
+  eliminarImpresion(impresion:object){
+    return this.http.post<any>(this.URL+"/eliminarImpresion", impresion)
+  }
 
   //Confeccion
   getConfecciones(){
     return this.http.get<any>(this.URL + "/AllConfecciones");
   }
 
-
   getConfecionById(confeccion:object){
     return this.http.post<any>(this.URL + '/ConfeccionById',confeccion)
+  }
+
+  actualizarConfeccion(confeccion:object){
+    return this.http.put<any>(this.URL + '/actualizarConfeccion', confeccion)
+  }
+
+  eliminarConfeccion(confeccion:object){
+    return this.http.post<any>(this.URL+"/eliminarConfeccion", confeccion)
   }
 
   //Cordon
@@ -53,6 +73,16 @@ export class CotizadorService {
     return this.http.post<any>(this.URL + '/CogederaById',confeccion)
   }
 
+  actualizarCordon(cordon:object){
+    return this.http.put<any>(this.URL+'/actualizarCordon',cordon)
+  }
+
+  
+  eliminarCordon(cordon:object){
+    return this.http.post<any>(this.URL+"/eliminarCordon", cordon)
+  }
+
+  //cotizaciones
   postCrearCotizacion(datosCotizador:object){
     return this.http.post<any>(this.URL+'/Cotizar', datosCotizador)
   }
