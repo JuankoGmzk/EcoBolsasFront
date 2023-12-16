@@ -81,7 +81,7 @@ import { CreateMaterialsComponent } from './components/create-materials/create-m
     ModalModule.forRoot(),
     MatSidenavModule,
     MatDividerModule,
-    MatListModule
+    MatListModule 
   ],
   providers: [
     AuthGuard,
